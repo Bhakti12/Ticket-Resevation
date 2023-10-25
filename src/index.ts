@@ -2,6 +2,8 @@ import express, { Application } from "express";
 import { config } from "./Config/env";
 import bodyParser, { json } from "body-parser";
 import { DatabaseConnection } from "./Config/db";
+import IndexRouter from "./Routes/IndexRouter";
+import "reflect-metadata";
 
 const port = config.PORT;
 
@@ -12,6 +14,8 @@ app.use(bodyParser.urlencoded({extended : false}));
 
 //console.log("executing database");
 DatabaseConnection();
+
+app.use(IndexRouter.testRoute);
 
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`);
