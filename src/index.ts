@@ -1,7 +1,7 @@
 import express, { Application } from "express";
-import { config } from "./config/env";
+import { config } from "./Config/env";
 import bodyParser, { json } from "body-parser";
-import { DatabaseConnection } from "./config/db";
+import { DatabaseConnection } from "./Config/db";
 
 const port = config.PORT;
 
