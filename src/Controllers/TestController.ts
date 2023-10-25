@@ -2,14 +2,18 @@ import express from "express";
 import { injectable } from "inversify";
 import { ITestService } from "../Interfaces/ITestService";
 import { TYPES } from "../Config/types";
+import globalSuccessHandler from "../Error/globalSuccessHandler";
+import { AllError } from "../Error/ErrorCases";
+import { AppError } from "../Error/ErrorHandler";
 
-export default class TestController{
+export default class TestController extends globalSuccessHandler{
 
     private _testService : ITestService;
 
     constructor(
         testService : ITestService
     ){
+        super();
         this._testService = testService;
     }
 
@@ -18,10 +22,15 @@ export default class TestController{
             const id = req.body.id;
             console.log("in controller");
             const getData = await this._testService.getTest(id);
-            res.status(200).send(JSON.stringify(getData));
+            if(getData){
+                this.sendJsonResponse(res,'data',{length : 1},getData);
+            }
+            else{
+                new AllError('Data Not Found', 'Not Found');
+            }
         }
-        catch(err){
-            console.log("error in test controller",err);
+        catch(err:any){
+            this.sendErrorResponse(req,res,err);    
         }
     }
 }
