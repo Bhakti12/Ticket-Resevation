@@ -17,7 +17,6 @@ export class TestService implements ITestService{
     async getTest(id:string): Promise<any> {
         try{
             const getData = await this._testRepository.getTest(id);
-            console.log(getData);
         }catch(err){
             console.log("error in test service",err);
         }

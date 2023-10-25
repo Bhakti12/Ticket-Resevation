@@ -11,7 +11,7 @@ export class TestRepository implements ITestRepository{
             const getData = await testSchema.findById({
                 _id : id
         });
-            console.log("test data",getData);
+            console.log("test data repo",getData);
         }catch(err){
             console.log("err in testrepo",err);
         }

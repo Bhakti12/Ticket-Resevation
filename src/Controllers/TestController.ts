@@ -18,9 +18,7 @@ export default class TestController{
             const id = req.body.id;
             console.log("in controller");
             const getData = await this._testService.getTest(id);
-            if(getData){
-                res.send(getData);
-            }
+            res.status(200).send(JSON.stringify(getData));
         }
         catch(err){
             console.log("error in test controller",err);
