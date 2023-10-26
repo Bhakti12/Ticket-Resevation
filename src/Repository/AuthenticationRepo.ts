@@ -6,10 +6,9 @@ const userSchema = require("../Model/userSchema");
 
 @injectable()
 export class AuthenticationRepository implements IAuthenticationRepository{
-    async registerUser(firstName:string,lastName:string,profilePic:string,idProof:string,mobileNo:string,emailId:string,password:string): Promise<NewAccountUser> {
+    async registerUser(firstName:string,lastName:string,profilePic:string | null,idProof:string | null,mobileNo:string,emailId:string,password:string): Promise<NewAccountUser> {
         try{
             const User = await userSchema.create({
-                data : {
                     firstName,
                     lastName,
                     profilePic,
@@ -17,12 +16,12 @@ export class AuthenticationRepository implements IAuthenticationRepository{
                     mobileNo,
                     emailId,
                     password
-                }
             });
+            console.log("user",User);
+            console.log(User.firstName,User.lastName,User.profilePic,User.idProof);
             return User;
         }catch(err){
             throw new AllError('An error occured while interacting with the database','Internal Server Error');
         }
-    }
-    
+    }   
 }

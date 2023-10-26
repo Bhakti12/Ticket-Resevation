@@ -1,5 +1,5 @@
 import { NewAccountUser } from "../Types/User";
 
 export interface IAuthenticationRepository{
-    registerUser(firstName:string,lastName:string,profilePic:string,idProof:string,mobileNo:string,emailId:string,password:string):Promise<NewAccountUser>;
+    registerUser(firstName:string,lastName:string,profilePic:string | null,idProof:string | null,mobileNo:string,emailId:string,password:string):Promise<NewAccountUser>;
 }

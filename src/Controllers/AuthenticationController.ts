@@ -34,15 +34,14 @@ export default class AuthenticationController extends globalSuccessHandler {
         password,
       };
 
-      const account = this._authService.registerUser(
-        firstName,
-        lastName,
-        profilePic,
-        idProof,
-        mobileNo,
-        emailId,
-        password
+      console.log("new user",newUser);
+
+      const account = await this._authService.registerUser(
+        newUser
       );
+
+      console.log("account",account);
+
       return this.sendJsonResponse(
         res,
         "Account created successfully",
