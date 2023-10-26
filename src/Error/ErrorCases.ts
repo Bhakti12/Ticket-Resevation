@@ -2,33 +2,41 @@ import { AppError } from "./ErrorHandler";
 
 export class AllError extends AppError{
     errors? : Record<string, unknown>;
-
+    
     constructor(message : string , errorType: string, errors?: Record<string, unknown>){
-        
+        console.log("inside allerror");    
 
         switch(errorType){
             case 'Bad Request':
-                super(message,'Bad Request',400);
+                super(400,'Bad Request',message);
+                this.errors = errors;
+                Error.captureStackTrace(this, this.constructor);
                 break;
             
             case 'Forbidden':
-                super(message,'forbidden',403);
+                super(403,'forbidden',message);
+                Error.captureStackTrace(this, this.constructor);
                 break;
                             
             case 'Not Found':
-                super(message,'Not Found',404);
+                super(404,'Not Found',message);
+                console.log("inside not found error");
+                Error.captureStackTrace(this, this.constructor);
                 break;
 
             case 'Not Implemented':
-                super(message,'Not Implemented',501);
+                super(501,'Not Implemented',message);
+                Error.captureStackTrace(this, this.constructor);
                 break;
 
             case 'Unauthorized':
-                super(message,'Unauthorized',401);
+                super(401,'Unauthorized',message);
+                Error.captureStackTrace(this, this.constructor);
                 break;
                 
             default : 
-                super(message,'Internal Server Error',500);
+                super(500,'Internal Server Error',message);
+                Error.captureStackTrace(this, this.constructor);
         }
          //handle for Bad Request
          //handle for forbidden

@@ -22,14 +22,10 @@ export default class TestController extends globalSuccessHandler{
             const id = req.body.id;
             console.log("in controller");
             const getData = await this._testService.getTest(id);
-            if(getData){
-                this.sendJsonResponse(res,'data',{length : 1},getData);
-            }
-            else{
-                new AllError('Data Not Found', 'Not Found');
-            }
+            this.sendJsonResponse(res,'data',1,getData);
         }
         catch(err:any){
+            console.log("err",err);
             this.sendErrorResponse(req,res,err);    
         }
     }

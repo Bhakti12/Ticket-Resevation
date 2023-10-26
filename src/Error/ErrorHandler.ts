@@ -1,26 +1,23 @@
 export class AppError extends Error{
     
-    statusCode : number;
-    status : boolean | string;
-    isOperational : boolean;
+    code: number;
 
-    constructor(message:string,status:string,statusCode:number){
+    status: string;
+
+    constructor(code: number, status: string, message: string) {
         super(message);
-        
-        this.statusCode = statusCode;
+        this.code = code;
         this.status = status;
-        this.isOperational = true;
-
         Error.captureStackTrace(this, this.constructor);
     }
 
-    getCode(): number {
-        return this.statusCode;
+    getCode() {
+        return this.code;
     }
 
     toJSON() {
         return {
-            code: this.statusCode,
+            code: this.code,
             status: this.status,
             message: this.message,
         };

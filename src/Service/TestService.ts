@@ -2,6 +2,7 @@ import { injectable,inject } from "inversify";
 import { ITestRepository } from "../Interfaces/ITestRepo";
 import { ITestService } from "../Interfaces/ITestService";
 import { TYPES } from "../Config/types";
+import { AllError } from "../Error/ErrorCases";
 
 @injectable()
 export class TestService implements ITestService{
@@ -15,11 +16,8 @@ export class TestService implements ITestService{
     }
 
     async getTest(id:string): Promise<any> {
-        try{
-            const getData = await this._testRepository.getTest(id);
-        }catch(err){
-            console.log("error in test service",err);
-        }
+        const getData = await this._testRepository.getTest(id);
+        return getData;
     }
     
 }
