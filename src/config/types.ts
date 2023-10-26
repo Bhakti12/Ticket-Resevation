@@ -1,4 +1,6 @@
 export const TYPES = {
     TestRepository : Symbol('ITestRepository'),
-    TestService : Symbol('ITestService')
+    TestService : Symbol('ITestService'),
+    AuthenticationRepository : Symbol('IAuthenticationRepository'),
+    AuthenticationService : Symbol('IAuthenticationService')
 }

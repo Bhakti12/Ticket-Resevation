@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended : false}));
 //console.log("executing database");
 DatabaseConnection();
 
-app.use(IndexRouter.testRoute);
+app.use(IndexRouter.testRoute,IndexRouter.authRoute);
 
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`);

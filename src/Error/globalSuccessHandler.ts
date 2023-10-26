@@ -1,7 +1,7 @@
 import * as JSONBig from 'json-bigint';
 import { Response, Request } from 'express';
 import { AppError } from './ErrorHandler';
-
+  
 export default class globalSuccessHandler{
     sendJsonResponse(res: Response, message: string | null, metadata: any | null, data: any | null){
         const response: any = {
@@ -27,4 +27,5 @@ export default class globalSuccessHandler{
             message: err.message,
         });
     }
+
 }
