@@ -22,7 +22,7 @@ var userSchema = new mongoose.Schema({
     mobileNo : {
         type : String
     },
-    email : {
+    emailId : {
         type : String
     },
     accountStatus : {

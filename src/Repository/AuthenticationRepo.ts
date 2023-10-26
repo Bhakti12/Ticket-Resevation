@@ -18,7 +18,7 @@ export class AuthenticationRepository implements IAuthenticationRepository{
                     password
             });
             console.log("user",User);
-            console.log(User.firstName,User.lastName,User.profilePic,User.idProof);
+            console.log(User.firstName,User.lastName,User.profilePic,User.idProof,User.emailId);
             return User;
         }catch(err){
             throw new AllError('An error occured while interacting with the database','Internal Server Error');
