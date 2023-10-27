@@ -1,37 +1,45 @@
-import app from "./express";
 import multer from "multer";
-import {GridFsStorage} from "multer-gridfs-storage";
+import { GridFsStorage } from "multer-gridfs-storage";
 import mongoose from "mongoose";
 import express from "express";
 
 let bucket: mongoose.mongo.GridFSBucket;
-mongoose.connection.on("connected", ()=>{
+mongoose.connection.on("connected", () => {
   var db = mongoose.connections[0].db;
-  bucket = new mongoose.mongo.GridFSBucket(db,{
-    bucketName : "ImageStore"
+  bucket = new mongoose.mongo.GridFSBucket(db, {
+    bucketName: "ImageStore",
   });
   //console.log(bucket);
-})
-
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
-
-const storage = new GridFsStorage({
-  url : "mongodb://127.0.0.1:27017/User-images",
-  file : (req,file) => {
-    return new Promise((resolve,reject)=>{
-      const filename = file.originalname;
-      const fileInfo = {
-        filename : filename,
-        bucketName : "ImageStore"
-      };
-      resolve(fileInfo);
-    });
-  }
 });
 
-const upload = multer({
-  storage
+// const storage = new GridFsStorage({
+//   url: "mongodb://127.0.0.1:27017/Ticket-Reservation",
+//   file: (req, file) => {
+//     console.log("file", file);
+//     const fileInfo = {
+//       filename: file.originalname,
+//       bucketName: "ImageStore",
+//     };
+//     return fileInfo;
+//   },
+// });
+
+// const upload = multer({
+//   storage,
+// });
+
+export const uploadFiles = multer({
+  storage: new GridFsStorage({
+    url: "mongodb://0.0.0.0:27017/Ticket-Reservation",
+    file: (req, file) => {
+      console.log("file", file);
+      const fileInfo = {
+        filename: file.originalname,
+        bucketName: "ImageStore",
+      };
+      return fileInfo;
+    },
+  }),
 });
 
 // app.post("/upload", upload.single("image"), (req,res) => {
@@ -56,4 +64,4 @@ const upload = multer({
 //     }
 // });
 
-export default upload;
+// export default upload;

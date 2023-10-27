@@ -3,11 +3,15 @@ import { IAuthenticationRepository } from "../Interfaces/IAuthenticationRepo";
 import { NewAccountUser } from "../Types/User";
 import { AllError } from "../Error/ErrorCases";
 const userSchema = require("../Model/userSchema");
+import bcrypt from "bcrypt";
 
 @injectable()
 export class AuthenticationRepository implements IAuthenticationRepository{
     async registerUser(firstName:string,lastName:string,profilePic:string | null,idProof:string | null,mobileNo:string,emailId:string,password:string): Promise<NewAccountUser> {
         try{
+            console.log("inside accountrepo");
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(password.toString(),salt);
             const User = await userSchema.create({
                     firstName,
                     lastName,
@@ -15,7 +19,7 @@ export class AuthenticationRepository implements IAuthenticationRepository{
                     idProof,
                     mobileNo,
                     emailId,
-                    password
+                    password:hashPassword
             });
             console.log("user",User);
             console.log(User.firstName,User.lastName,User.profilePic,User.idProof,User.emailId);

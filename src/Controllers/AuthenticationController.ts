@@ -3,6 +3,8 @@ import { NewAccountUser } from "../Types/User";
 import multer from "multer";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
 import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
+import { GridFsStorage } from "multer-gridfs-storage";
+import gfs from "multer-gridfs-storage";
 
 export default class AuthenticationController extends globalSuccessHandler {
   private _authService: IAuthenticationService;
@@ -14,6 +16,7 @@ export default class AuthenticationController extends globalSuccessHandler {
 
   async registerAccount(req: express.Request, res: express.Response) {
     try {
+        console.log("inside controller");
       const {
         firstName,
         lastName,

@@ -15,6 +15,7 @@ export class AuthenticationService implements IAuthenticationService{
     }
 
    async registerUser(data:NewAccountUser): Promise<NewAccountUser> {
+        console.log("inside account service");
         const user = await this._authRepo.registerUser(data.firstName,data.lastName,data.profilePic,data.idProof,data.mobileNo,data.emailId,data.password);
         console.log("User service",user);
         return user;

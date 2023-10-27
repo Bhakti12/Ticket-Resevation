@@ -50,12 +50,6 @@ const registerUser = checkSchema({
         },
         trim: true,
         stripLow: true,
-    },
-    profilePic: {
-        in: 'body',
-    },
-    idProof: {
-        in: 'body',
     }
 });
 
