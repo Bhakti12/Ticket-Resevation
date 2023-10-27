@@ -16,9 +16,12 @@ export class AuthenticationService implements IAuthenticationService{
 
    async registerUser(data:NewAccountUser): Promise<NewAccountUser> {
         console.log("inside account service");
-        const user = await this._authRepo.registerUser(data.firstName,data.lastName,data.profilePic,data.idProof,data.mobileNo,data.emailId,data.password);
+        const user = await this._authRepo.registerUser(data.firstName,data.lastName,data.profilePic,data.idProof,data.mobileNo,data.emailId,data.password,data.status);
         console.log("User service",user);
         return user;
     }
     
+    async loginAccount(data:any): Promise<any> {
+        throw new Error("Method not implemented.");
+    } 
 }

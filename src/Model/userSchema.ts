@@ -25,7 +25,7 @@ var userSchema = new mongoose.Schema({
     emailId : {
         type : String
     },
-    accountStatus : {
+    status : {
         type : String
     },
     createdAt : {

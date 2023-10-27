@@ -25,6 +25,7 @@ export default class AuthenticationController extends globalSuccessHandler {
         mobileNo,
         emailId,
         password,
+        status
       } = req.body;
 
       const newUser: NewAccountUser = {
@@ -35,6 +36,7 @@ export default class AuthenticationController extends globalSuccessHandler {
         mobileNo,
         emailId,
         password,
+        status
       };
 
       console.log("new user",newUser);
@@ -54,6 +56,15 @@ export default class AuthenticationController extends globalSuccessHandler {
         account
       );
     } catch (err) {
+      this.sendErrorResponse(req, res, err);
+    }
+  }
+
+  async loginAccount(req:express.Request,res:express.Response){
+    try{
+      const { emailId,password } = req.body;
+      console.log("req.body",req.body);
+    }catch(err){
       this.sendErrorResponse(req, res, err);
     }
   }

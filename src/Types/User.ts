@@ -5,5 +5,6 @@ export declare type NewAccountUser = {
     idProof : string | null,
     mobileNo : string,
     emailId : string,
-    password : string
+    password : string,
+    status : string
 };
