@@ -21,5 +21,9 @@ export default class roleService implements IRoleService{
     async getRoleByName(roleName: string): Promise<any> {
         await this._roleRepo.getRoleByName(roleName);
     }
+
+    async getroleById(userId: BigInt): Promise<any> {
+        await this._roleRepo.getroleById(userId);
+    }
     
 }

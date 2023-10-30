@@ -5,4 +5,5 @@ export const TYPES = {
     AuthenticationService : Symbol('IAuthenticationService'),
     RoleRepository : Symbol('IRoleRepository'),
     RoleService : Symbol('IRoleService'),
+    JwtService : Symbol('IJwtService'),
 }

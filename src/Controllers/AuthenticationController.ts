@@ -16,7 +16,7 @@ export default class AuthenticationController extends globalSuccessHandler {
 
   async registerAccount(req: express.Request, res: express.Response) {
     try {
-        console.log("inside controller");
+      console.log("inside controller");
       const {
         firstName,
         lastName,
@@ -26,7 +26,7 @@ export default class AuthenticationController extends globalSuccessHandler {
         emailId,
         password,
         status,
-        salt
+        salt,
       } = req.body;
 
       const newUser: NewAccountUser = {
@@ -38,16 +38,14 @@ export default class AuthenticationController extends globalSuccessHandler {
         emailId,
         password,
         status,
-        salt:''
+        salt: "",
       };
 
-      console.log("new user",newUser);
+      console.log("new user", newUser);
 
-      const account = await this._authService.registerUser(
-        newUser
-      );
+      const account = await this._authService.registerUser(newUser);
 
-      console.log("account",account);
+      console.log("account", account);
 
       return this.sendJsonResponse(
         res,
@@ -62,12 +60,30 @@ export default class AuthenticationController extends globalSuccessHandler {
     }
   }
 
-  async loginAccount(req:express.Request,res:express.Response){
-    try{
-      const { emailId,password } = req.body;
-      console.log("req.body",req.body);
-      const login = this._authService.loginAccount(emailId,password);
-    }catch(err){
+  async loginAccount(req: express.Request, res: express.Response) {
+    try {
+      const { emailId, password } = req.body;
+      console.log("req.body", req.body);
+      const login = this._authService.loginAccount(emailId, password);
+      this.sendJsonResponse(
+        res,
+        "Login sucessfully!",
+        {
+          length: 1,
+        },
+        login
+      );
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
+    }
+  }
+
+  async refreshToken(req: express.Request, res: express.Response) {
+    try {
+      const { userId, refreshToken } = req.body;
+      const token = this._authService.refreshToken(userId, refreshToken);
+      this.sendJsonResponse(res, null, { size: 1 }, { token });
+    } catch (err) {
       this.sendErrorResponse(req, res, err);
     }
   }

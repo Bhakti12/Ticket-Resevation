@@ -1,10 +1,9 @@
 import { injectable } from "inversify";
 import { IAuthenticationRepository } from "../Interfaces/IAuthenticationRepo";
-import { NewAccountUser, RefreshToken } from "../Types/User";
+import { NewAccountUser, RefreshToken, getAccountUser, getUser } from "../Types/User";
 import { AllError } from "../Error/ErrorCases";
 const userSchema = require("../Model/userSchema");
 const refreshTokenSchema = require("../Model/refreshTokenSchema");
-import bcrypt from "bcrypt";
 
 @injectable()
 export class AuthenticationRepository implements IAuthenticationRepository{
@@ -30,11 +29,12 @@ export class AuthenticationRepository implements IAuthenticationRepository{
         }
     }
     
-    async getUserbyEmailId(email: string): Promise<NewAccountUser> {
+    async getUserbyEmailId(email: string): Promise<getAccountUser> {
         try{
             const user = await userSchema.findOne({
                 emailId : email
             });
+            const userId = user.userId;
             const firstName = user.firstName;
             const lastName = user.lastName;
             const profilePic = user.profilePic;
@@ -44,7 +44,7 @@ export class AuthenticationRepository implements IAuthenticationRepository{
             const password = user.password;
             const status = user.status;
             const salt = user.salt;
-            return {firstName,lastName,profilePic,idProof,mobileNo,emailId,password,status,salt};
+            return {userId,firstName,lastName,profilePic,idProof,mobileNo,emailId,password,status,salt};
         }catch(err){
             throw new AllError('An error occured while interacting with the database','Internal Server Error');
         }
@@ -72,4 +72,24 @@ export class AuthenticationRepository implements IAuthenticationRepository{
             throw new AllError('An error occured while interacting with the database','Internal Server Error');
         }    
     }
+
+    async getAllUser():Promise<getUser>{
+        try{
+            const res = await userSchema.find();
+            const firstName = res.firstName;
+            const lastName = res.lastName;
+            const profilePic = res.profilePic;
+            const idProof = res.idProof;
+            const mobileNo = res.mobileNo;
+            const emailId = res.emailId;
+            const status = res.status;
+            return {firstName,lastName,profilePic,idProof,mobileNo,emailId,status};
+        }catch(err){
+            throw new AllError('An error occured while interacting with the database','Internal Server Error');
+        }
+    }
+
+    // async updateStatus():Promise<>{
+
+    // }
 }

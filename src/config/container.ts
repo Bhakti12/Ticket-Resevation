@@ -14,6 +14,8 @@ import { IRoleRepository } from "../Interfaces/IRoleRepo";
 import roleRepository from "../Repository/RoleRepository";
 import { IRoleService } from "../Interfaces/IRoleService";
 import roleService from "../Service/RoleService";
+import { IJwtService } from "../Interfaces/IJwtService";
+import jwtService from "../Service/jwtService";
 
 const iocContainer = new Container();
 
@@ -26,4 +28,6 @@ iocContainer.bind<IAuthenticationService>(TYPES.AuthenticationService).to(Authen
 
 iocContainer.bind<IRoleRepository>(TYPES.RoleRepository).to(roleRepository);
 iocContainer.bind<IRoleService>(TYPES.RoleService).to(roleService);
+
+iocContainer.bind<IJwtService>(TYPES.JwtService).to(jwtService);
 export {iocContainer};

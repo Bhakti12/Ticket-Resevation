@@ -12,35 +12,35 @@ mongoose.connection.on("connected", () => {
   //console.log(bucket);
 });
 
-// const storage = new GridFsStorage({
-//   url: "mongodb://127.0.0.1:27017/Ticket-Reservation",
-//   file: (req, file) => {
-//     console.log("file", file);
-//     const fileInfo = {
-//       filename: file.originalname,
-//       bucketName: "ImageStore",
-//     };
-//     return fileInfo;
-//   },
-// });
-
-// const upload = multer({
-//   storage,
-// });
-
-export const uploadFiles = multer({
-  storage: new GridFsStorage({
-    url: "mongodb://0.0.0.0:27017/Ticket-Reservation",
-    file: (req, file) => {
-      console.log("file", file);
-      const fileInfo = {
-        filename: file.originalname,
-        bucketName: "ImageStore",
-      };
-      return fileInfo;
-    },
-  }),
+const storage = new GridFsStorage({
+  url: "mongodb://127.0.0.1:27017/Ticket-Reservation",
+  file: (req, file) => {
+    console.log("file", file);
+    const fileInfo = {
+      filename: file.originalname,
+      bucketName: "ImageStore",
+    };
+    return fileInfo;
+  },
 });
+
+const upload = multer({
+  storage,
+});
+
+// export const uploadFiles = multer({
+//   storage: new GridFsStorage({
+//     url: "mongodb://0.0.0.0:27017/Ticket-Reservation",
+//     file: (req, file) => {
+//       console.log("file", file);
+//       const fileInfo = {
+//         filename: file.originalname,
+//         bucketName: "ImageStore",
+//       };
+//       return fileInfo;
+//     },
+//   }),
+// });
 
 // app.post("/upload", upload.single("image"), (req,res) => {
 //   res.status(200).send("image uploaded successfully!");
@@ -64,4 +64,4 @@ export const uploadFiles = multer({
 //     }
 // });
 
-// export default upload;
+export default upload;
