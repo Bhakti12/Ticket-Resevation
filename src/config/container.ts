@@ -10,6 +10,10 @@ import { IAuthenticationRepository } from "../Interfaces/IAuthenticationRepo";
 import { AuthenticationRepository } from "../Repository/AuthenticationRepo";
 import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
 import { AuthenticationService } from "../Service/AuthenticationService";
+import { IRoleRepository } from "../Interfaces/IRoleRepo";
+import roleRepository from "../Repository/RoleRepository";
+import { IRoleService } from "../Interfaces/IRoleService";
+import roleService from "../Service/RoleService";
 
 const iocContainer = new Container();
 
@@ -20,4 +24,6 @@ iocContainer.bind<ITestService>(TYPES.TestService).to(TestService);
 iocContainer.bind<IAuthenticationRepository>(TYPES.AuthenticationRepository).to(AuthenticationRepository);
 iocContainer.bind<IAuthenticationService>(TYPES.AuthenticationService).to(AuthenticationService);
 
+iocContainer.bind<IRoleRepository>(TYPES.RoleRepository).to(roleRepository);
+iocContainer.bind<IRoleService>(TYPES.RoleService).to(roleService);
 export {iocContainer};
