@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import { config } from "./env";
 
 export function DatabaseConnection(){
+    console.log("inside database connection");
     dotenv.config();
 
     const DBstring:string = `${String(config.DB)}`;

@@ -7,7 +7,7 @@ export default class roleRepository implements IRoleRepository{
     async addRole(userId: BigInt, roleName: string): Promise<any> {
         try{
             const addRole = await roleSchema.create({
-                roleName,
+                roleName:'User',
                 userId
             });    
             return addRole; 
