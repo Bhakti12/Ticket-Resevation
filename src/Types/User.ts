@@ -6,5 +6,12 @@ export declare type NewAccountUser = {
     mobileNo : string,
     emailId : string,
     password : string,
-    status : string
+    status : string,
+    salt?: string
 };
+
+export declare type RefreshToken = {
+    userId : BigInt | null,
+    refreshToken : string,
+    createdAt : Date
+}

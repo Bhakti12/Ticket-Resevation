@@ -7,6 +7,7 @@ import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
 import { TYPES } from "../Config/types";
 import registerUser from "../Validators/register-User-Validator";
 import {uploadFiles} from "../Config/storageConfig";
+import loginUser from "../Validators/loginValidator";
 
 const router = express.Router();
 const authService = Container.get<IAuthenticationService>(
@@ -18,6 +19,12 @@ router.post(
   "/register",
   registerUser,
   (req, res) => authController.registerAccount(req, res)
+);
+
+router.post(
+  "/login",
+  loginUser,
+  (req,res) => authController.loginAccount(req,res)
 );
 
 export default router;

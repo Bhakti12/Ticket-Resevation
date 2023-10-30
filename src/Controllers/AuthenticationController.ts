@@ -25,7 +25,8 @@ export default class AuthenticationController extends globalSuccessHandler {
         mobileNo,
         emailId,
         password,
-        status
+        status,
+        salt
       } = req.body;
 
       const newUser: NewAccountUser = {
@@ -36,7 +37,8 @@ export default class AuthenticationController extends globalSuccessHandler {
         mobileNo,
         emailId,
         password,
-        status
+        status,
+        salt:''
       };
 
       console.log("new user",newUser);
@@ -64,6 +66,7 @@ export default class AuthenticationController extends globalSuccessHandler {
     try{
       const { emailId,password } = req.body;
       console.log("req.body",req.body);
+      const login = this._authService.loginAccount(emailId,password);
     }catch(err){
       this.sendErrorResponse(req, res, err);
     }
