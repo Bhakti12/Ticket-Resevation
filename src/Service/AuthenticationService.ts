@@ -40,7 +40,7 @@ export class AuthenticationService implements IAuthenticationService {
     const encrypted =
       cipher.update(data.password, "utf8", "hex") + cipher.final("hex");
     const saltIV = IV.toString();
-    const user = await this._authRepo.registerUser(
+    const user:any = await this._authRepo.registerUser(
       data.firstName,
       data.lastName,
       data.profilePic,
@@ -50,7 +50,11 @@ export class AuthenticationService implements IAuthenticationService {
       encrypted,
       data.status
     );
+
+      //assigning a role
+    const addRoleToUser = await this._roleRepo.addRole(user._id,'User');
     console.log("User service", user);
+    console.log("add role",addRoleToUser);
     return user;
   }
 
@@ -97,6 +101,8 @@ export class AuthenticationService implements IAuthenticationService {
 
       await this._authRepo.createRefreshToken(user.userId,await refreshToken);  
       
+      //set LastLoginAt  
+      await this._authRepo.setUserLastLogin(user.userId);
       return user;
     }
   }

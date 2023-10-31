@@ -10,8 +10,12 @@ const port = config.PORT;
 
 const app:Application = express();
 
-const allowlist: any[string] = config.ALLOW_CORS_DOMAIN;
-
+// const allowlist: any[string] = config.ALLOW_CORS_DOMAIN;
+// app.get(`${config.API_ROOT}/doc/:name`, (req,res) => {
+//     let domains = JSON.parse(allowlist);
+//     res.header('Content-Security-Policy', `frame-ancestors 'self' ${domains.join(' ')}`);
+//     res.sendFile(`./public/${req.params.name}`, { root: __dirname });
+// });
 
 app.use(json());
 app.use(bodyParser.urlencoded({extended : false}));

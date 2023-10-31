@@ -7,7 +7,8 @@ const refreshTokenSchema = require("../Model/refreshTokenSchema");
 
 @injectable()
 export class AuthenticationRepository implements IAuthenticationRepository{
-    async registerUser(firstName:string,lastName:string,profilePic:string | null,idProof:string | null,mobileNo:string,emailId:string,password:string,status:string): Promise<NewAccountUser> {
+    
+    async registerUser(firstName:string,lastName:string,profilePic:string | null,idProof:string | null,mobileNo:string,emailId:string,password:string,status:string): Promise<getAccountUser> {
         try{
             console.log("inside accountrepo");
             const User = await userSchema.create({
@@ -88,7 +89,62 @@ export class AuthenticationRepository implements IAuthenticationRepository{
         }
     }
 
-    // async updateStatus():Promise<>{
-
-    // }
+    async getUserById(userId: BigInt): Promise<getUser> {
+        try{
+            const getUser = await userSchema.findOne({
+                _id : userId
+            });
+            const firstName = getUser.firstName;
+            const lastName = getUser.lastName;
+            const profilePic = getUser.profilePic;
+            const idProof = getUser.idProof;
+            const email = getUser.emailId;
+            const mobileNo = getUser.mobileNo;
+            const status = getUser.status;
+            return {firstName:firstName,lastName:lastName,profilePic:profilePic,idProof:idProof,mobileNo:mobileNo,emailId:email,status:status};
+        }catch(err){
+            throw new AllError('An error occured while interacting with the database','Internal Server Error');
+        }
+    }
+    
+    async deleteRefreshToken(userId: BigInt, token: string): Promise<void> {
+        try{
+            const refreshToken = await refreshTokenSchema.deleteOne({
+                _id : userId,
+                token : token
+            });
+        }catch(err){
+            throw new AllError('An error occured while interacting with the database','Internal Server Error');
+        }
+    }
+    
+    async setUserLastLogOut(userId: BigInt): Promise<void> {
+        try{
+            const updateDate = await userSchema.updateOne(
+                {
+                    _id : userId
+                },
+                {
+                    lastLogOutAt : new Date()
+                }
+            );
+        }catch(err){
+            throw new AllError('An error occured while interacting with the database','Internal Server Error');
+        }
+    }
+    
+    async setUserLastLogin(userId: BigInt): Promise<void> {
+        try{
+            const updateDate = await userSchema.updateOne(
+                {
+                    _id : userId
+                },
+                {
+                    lastLoginAt : new Date()
+                }
+            );
+        }catch(err){
+            throw new AllError('An error occured while interacting with the database','Internal Server Error');
+        }
+    }
 }

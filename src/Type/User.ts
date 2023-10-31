@@ -1,4 +1,5 @@
 export declare type NewAccountUser = {
+    userId? : BigInt,
     firstName : string,
     lastName : string,
     profilePic : string | null,
@@ -34,7 +35,7 @@ export declare type getUser = {
     idProof : string | null,
     mobileNo : string,
     emailId : string,
-    status : string,   
+    status : string  
 }
 
 export declare type userToken = {

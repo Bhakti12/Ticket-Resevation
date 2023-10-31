@@ -10,7 +10,7 @@ export default class roleRepository implements IRoleRepository{
         try{
             const addRole = await roleSchema.create({
                 roleName:'User',
-                userId
+                userId:userId
             });    
             return addRole; 
         }catch(err){
