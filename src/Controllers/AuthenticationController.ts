@@ -3,8 +3,7 @@ import { NewAccountUser } from "../Types/User";
 import multer from "multer";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
 import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
-import { GridFsStorage } from "multer-gridfs-storage";
-import gfs from "multer-gridfs-storage";
+import path from "path";
 
 export default class AuthenticationController extends globalSuccessHandler {
   private _authService: IAuthenticationService;
@@ -32,14 +31,32 @@ export default class AuthenticationController extends globalSuccessHandler {
       const newUser: NewAccountUser = {
         firstName,
         lastName,
-        profilePic: req.file ? (req.file as any).location : null,
-        idProof: req.file ? (req.file as any).location : null,
+        profilePic:"",
+        idProof:"",
         mobileNo,
         emailId,
         password,
         status,
         salt: "",
       };
+
+      let file;
+      // let fileName;
+      for (const key in req.files) {
+        file = req.files[key];
+        //console.log("file", file);
+        if(Array.isArray(file)){
+          const fileUrl = file.map((f)=>{
+            return `D:/Ticket-Reservation/Ticket-Resevation/src/public/${f.filename}`;
+          });   
+
+          if(key === 'profilePic'){
+            newUser.profilePic = fileUrl.join(", ");
+          }else if(key === 'idProof'){
+            newUser.idProof = fileUrl.join(", ");
+          }
+        }
+      }
 
       console.log("new user", newUser);
 

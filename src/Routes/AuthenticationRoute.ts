@@ -17,6 +17,7 @@ const authController = new AuthenticationController(authService);
 
 router.post(
   "/register",
+  upload.fields([{name : 'profilePic',maxCount:1},{name : 'idProof',maxCount:1}]),
   registerUser,
   (req, res) => authController.registerAccount(req, res)
 );

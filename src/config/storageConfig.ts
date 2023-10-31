@@ -12,21 +12,31 @@ mongoose.connection.on("connected", () => {
   //console.log(bucket);
 });
 
-const storage = new GridFsStorage({
-  url: "mongodb://127.0.0.1:27017/Ticket-Reservation",
-  file: (req, file) => {
-    console.log("file", file);
-    const fileInfo = {
-      filename: file.originalname,
-      bucketName: "ImageStore",
-    };
-    return fileInfo;
-  },
+// const storage = new GridFsStorage({
+//   url: "mongodb://127.0.0.1:27017/Ticket-Reservation",
+//   file: (req, file) => {
+//     console.log("file", file);
+//     const fileInfo = {
+//       filename: file.originalname,
+//       bucketName: "ImageStore",
+//     };
+//     return fileInfo;
+//   },
+// });
+
+const uploadStorage = multer.diskStorage({
+    destination : function(req, file, cb) {
+      cb(null, 'src/public/')
+    },
+    filename : function(req, file, cb){
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
 });
 
 const upload = multer({
-  storage,
-});
+  storage : uploadStorage
+})
 
 // export const uploadFiles = multer({
 //   storage: new GridFsStorage({
