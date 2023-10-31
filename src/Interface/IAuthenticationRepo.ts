@@ -10,5 +10,5 @@ export interface IAuthenticationRepository{
     deleteRefreshToken(userId:BigInt,token:string):Promise<void>;
     setUserLastLogOut(userId:BigInt):Promise<void>;
     setUserLastLogin(userId:BigInt):Promise<void>;
-    changeUserStatus(userId:BigInt):Promise<any>;
+    changeUserStatus(userId:BigInt,status:string):Promise<any>;
 }

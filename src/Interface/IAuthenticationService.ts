@@ -5,5 +5,6 @@ export interface IAuthenticationService{
     loginAccount(emailId:string,password:string):Promise<any>;
     refreshToken(userId:BigInt,refreshToken:string):Promise<string>;
     getAllUser():Promise<getUser>;
-    doLogOut(userId:BigInt,refreshToken:string): Promise<boolean>;
+    chnageUserStatus(userId:BigInt,token:string):Promise<any>;
+    doLogOut(userId:BigInt,status:string): Promise<boolean>;
 }
