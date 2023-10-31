@@ -1,8 +1,8 @@
 import express from "express";
-import { NewAccountUser } from "../Types/User";
+import { NewAccountUser } from "../Type/User";
 import multer from "multer";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
-import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
+import { IAuthenticationService } from "../Interface/IAuthenticationService";
 import path from "path";
 
 export default class AuthenticationController extends globalSuccessHandler {
@@ -13,7 +13,7 @@ export default class AuthenticationController extends globalSuccessHandler {
     this._authService = authService;
   }
 
-  async registerAccount(req: express.Request, res: express.Response) {
+  async registerAccount(req: any, res: express.Response) {
     try {
       console.log("inside controller");
       const {
@@ -30,31 +30,31 @@ export default class AuthenticationController extends globalSuccessHandler {
       const newUser: NewAccountUser = {
         firstName,
         lastName,
-        profilePic: "",
-        idProof: "",
+        profilePic: (req.files.profilePic[0].filename)as any | "",
+        idProof: (req.files.idProof[0].filename)as any | "",
         mobileNo,
         emailId,
         password,
         status
       };
 
-      let file;
+      // let file;
       // let fileName;
-      for (const key in req.files) {
-        file = req.files[key];
-        //console.log("file", file);
-        if (Array.isArray(file)) {
-          const fileUrl = file.map((f) => {
-            return `D:/Ticket-Reservation/Ticket-Resevation/src/public/${f.filename}`;
-          });
+      // for (const key in req.files) {
+      //   file = req.files[key];
+      //   //console.log("file", file);
+      //   if (Array.isArray(file)) {
+      //     const fileUrl = file.map((f) => {
+      //       return `D:/Ticket-Reservation/Ticket-Resevation/src/public/${f.filename}`;
+      //     });
 
-          if (key === "profilePic") {
-            newUser.profilePic = fileUrl.join(", ");
-          } else if (key === "idProof") {
-            newUser.idProof = fileUrl.join(", ");
-          }
-        }
-      }
+      //     if (key === "profilePic") {
+      //       newUser.profilePic = fileUrl.join(", ");
+      //     } else if (key === "idProof") {
+      //       newUser.idProof = fileUrl.join(", ");
+      //     }
+      //   }
+      // }
 
       console.log("new user", newUser);
 

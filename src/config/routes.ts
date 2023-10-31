@@ -1,6 +1,6 @@
 import express from "express";
 import { config } from "./env";
-import testRoute from "../Routes/TestRoute";
+import testRoute from "../Route/TestRoute";
 
 const appRoute = express.Router();
 

@@ -1,7 +1,7 @@
-import { IJwtService } from "../Interfaces/IJwtService";
+import { IJwtService } from "../Interface/IJwtService";
 import jwt from "jsonwebtoken";
 import { injectable } from "inversify";
-import { userToken } from "../Types/User";
+import { userToken } from "../Type/User";
 
 @injectable()
 export default class jwtService implements IJwtService {

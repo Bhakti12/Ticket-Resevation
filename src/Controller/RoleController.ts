@@ -1,7 +1,7 @@
 import express from "express";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
-import { IRoleRepository } from "../Interfaces/IRoleRepo";
-import { IRoleService } from "../Interfaces/IRoleService";
+import { IRoleRepository } from "../Interface/IRoleRepo";
+import { IRoleService } from "../Interface/IRoleService";
 
 export default class RoleController extends globalSuccessHandler{
 

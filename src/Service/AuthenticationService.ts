@@ -1,14 +1,14 @@
 import { inject, injectable } from "inversify";
-import { IAuthenticationRepository } from "../Interfaces/IAuthenticationRepo";
-import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
-import { NewAccountUser, getAccountUser, userToken } from "../Types/User";
+import { IAuthenticationRepository } from "../Interface/IAuthenticationRepo";
+import { IAuthenticationService } from "../Interface/IAuthenticationService";
+import { NewAccountUser, getAccountUser, getUser, userToken } from "../Type/User";
 import { TYPES } from "../Config/types";
 import { AllError } from "../Error/ErrorCases";
 import crypto, { CipherKey } from "crypto";
 import { config } from "../Config/env";
 import cipher from "crypto";
-import { IRoleRepository } from "../Interfaces/IRoleRepo";
-import { IJwtService } from "../Interfaces/IJwtService";
+import { IRoleRepository } from "../Interface/IRoleRepo";
+import { IJwtService } from "../Interface/IJwtService";
 
 @injectable()
 export class AuthenticationService implements IAuthenticationService {
@@ -24,6 +24,9 @@ export class AuthenticationService implements IAuthenticationService {
     this._authRepo = authRepository;
     this._roleRepo = roleRepo;
     this._jwtService = jwtservice;
+  }
+  getAllUser(): Promise<getUser> {
+    throw new Error("Method not implemented.");
   }
   
   async registerUser(data: NewAccountUser): Promise<NewAccountUser> {
@@ -130,4 +133,7 @@ export class AuthenticationService implements IAuthenticationService {
     return newAccessToken;
   }
 
+  // async getAllUser():Promise<getUser>{
+    
+  // }
 }

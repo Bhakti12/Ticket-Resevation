@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { AllError } from "../Error/ErrorCases";
-import { IRoleRepository } from "../Interfaces/IRoleRepo";
+import { IRoleRepository } from "../Interface/IRoleRepo";
 const roleSchema =  require("../Model/roleSchema");
 
 @injectable()

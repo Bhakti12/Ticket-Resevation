@@ -1,13 +1,13 @@
 /* eslint-disable import/no-cycle */
 import express from "express";
-import AuthenticationController from "../Controllers/AuthenticationController";
+import AuthenticationController from "../Controller/AuthenticationController";
 import { AuthenticationService } from "../Service/AuthenticationService";
 import { iocContainer as Container } from "../Config/container";
-import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
+import { IAuthenticationService } from "../Interface/IAuthenticationService";
 import { TYPES } from "../Config/types";
-import registerUser from "../Validators/register-User-Validator";
+import registerUser from "../Validator/register-User-Validator";
 import upload from "../Config/storageConfig";
-import loginUser from "../Validators/loginValidator";
+import loginUser from "../Validator/loginValidator";
 
 const router = express.Router();
 const authService = Container.get<IAuthenticationService>(

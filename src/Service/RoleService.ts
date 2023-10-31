@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-import { IRoleService } from "../Interfaces/IRoleService";
-import { IRoleRepository } from "../Interfaces/IRoleRepo";
+import { IRoleService } from "../Interface/IRoleService";
+import { IRoleRepository } from "../Interface/IRoleRepo";
 import {TYPES} from "../Config/types";
 
 @injectable()

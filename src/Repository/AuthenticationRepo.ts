@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
-import { IAuthenticationRepository } from "../Interfaces/IAuthenticationRepo";
-import { NewAccountUser, RefreshToken, getAccountUser, getUser } from "../Types/User";
+import { IAuthenticationRepository } from "../Interface/IAuthenticationRepo";
+import { NewAccountUser, RefreshToken, getAccountUser, getUser } from "../Type/User";
 import { AllError } from "../Error/ErrorCases";
 const userSchema = require("../Model/userSchema");
 const refreshTokenSchema = require("../Model/refreshTokenSchema");

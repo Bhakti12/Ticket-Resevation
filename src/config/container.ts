@@ -1,20 +1,20 @@
 import { Container } from "inversify";
 import "reflect-metadata";
 import { buildProviderModule } from "inversify-binding-decorators";
-import { ITestRepository } from "../Interfaces/ITestRepo";
+import { ITestRepository } from "../Interface/ITestRepo";
 import { TYPES } from "./types";
 import { TestRepository } from "../Repository/TestRepo";
-import { ITestService } from "../Interfaces/ITestService";
+import { ITestService } from "../Interface/ITestService";
 import { TestService } from "../Service/TestService";
-import { IAuthenticationRepository } from "../Interfaces/IAuthenticationRepo";
+import { IAuthenticationRepository } from "../Interface/IAuthenticationRepo";
 import { AuthenticationRepository } from "../Repository/AuthenticationRepo";
-import { IAuthenticationService } from "../Interfaces/IAuthenticationService";
+import { IAuthenticationService } from "../Interface/IAuthenticationService";
 import { AuthenticationService } from "../Service/AuthenticationService";
-import { IRoleRepository } from "../Interfaces/IRoleRepo";
+import { IRoleRepository } from "../Interface/IRoleRepo";
 import roleRepository from "../Repository/RoleRepository";
-import { IRoleService } from "../Interfaces/IRoleService";
+import { IRoleService } from "../Interface/IRoleService";
 import roleService from "../Service/RoleService";
-import { IJwtService } from "../Interfaces/IJwtService";
+import { IJwtService } from "../Interface/IJwtService";
 import jwtService from "../Service/jwtService";
 
 const iocContainer = new Container();

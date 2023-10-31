@@ -12,4 +12,5 @@ export const config = {
     REFRESH_TOKEN_EXPIRES_IN : process.env.REFRESH_TOKEN_EXPIRES_IN!,
     KEY : process.env.KEY!,
     IV : process.env.IV!,
+    ALLOW_CORS_DOMAIN : process.env.ALLOW_CORS_DOMAIN,
 }

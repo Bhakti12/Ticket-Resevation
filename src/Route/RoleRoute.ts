@@ -2,8 +2,8 @@
 import express from 'express';
 import { iocContainer as Container } from '../Config/container';
 import { TYPES } from '../Config/types';
-import { IRoleService } from '../Interfaces/IRoleService';
-import RoleController from '../Controllers/RoleController';
+import { IRoleService } from '../Interface/IRoleService';
+import RoleController from '../Controller/RoleController';
 
 const router = express.Router();
 const roleService = Container.get<IRoleService>(TYPES.RoleService);

@@ -1,6 +1,6 @@
 import express from "express";
 import { injectable } from "inversify";
-import { ITestService } from "../Interfaces/ITestService";
+import { ITestService } from "../Interface/ITestService";
 import { TYPES } from "../Config/types";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
 import { AllError } from "../Error/ErrorCases";
