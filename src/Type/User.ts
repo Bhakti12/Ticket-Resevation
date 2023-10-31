@@ -1,5 +1,5 @@
 export declare type NewAccountUser = {
-    userId? : BigInt,
+    //userId? : BigInt,
     firstName : string,
     lastName : string,
     profilePic : string | null,

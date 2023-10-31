@@ -16,6 +16,10 @@ import { IRoleService } from "../Interface/IRoleService";
 import roleService from "../Service/RoleService";
 import { IJwtService } from "../Interface/IJwtService";
 import jwtService from "../Service/jwtService";
+import { IEventRepository } from "../Interface/IEventRepo";
+import eventRepository from "../Repository/EventRepository";
+import { IEventService } from "../Interface/IEventService";
+import eventService from "../Service/EventService";
 
 const iocContainer = new Container();
 
@@ -28,6 +32,9 @@ iocContainer.bind<IAuthenticationService>(TYPES.AuthenticationService).to(Authen
 
 iocContainer.bind<IRoleRepository>(TYPES.RoleRepository).to(roleRepository);
 iocContainer.bind<IRoleService>(TYPES.RoleService).to(roleService);
+
+iocContainer.bind<IEventRepository>(TYPES.EventRepository).to(eventRepository);
+iocContainer.bind<IEventService>(TYPES.EventService).to(eventService);
 
 iocContainer.bind<IJwtService>(TYPES.JwtService).to(jwtService);
 export {iocContainer};
