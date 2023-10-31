@@ -8,12 +8,15 @@ import { TYPES } from "../Config/types";
 import registerUser from "../Validator/register-User-Validator";
 import upload from "../Config/storageConfig";
 import loginUser from "../Validator/loginValidator";
+import adminController from "../Controller/AdminController";
+import logoutValidator from "../Validator/logoutValidator";
 
 const router = express.Router();
 const authService = Container.get<IAuthenticationService>(
   TYPES.AuthenticationService
 );
 const authController = new AuthenticationController(authService);
+const AdminController = new adminController(authService);
 
 router.post(
   "/register",
@@ -31,6 +34,22 @@ router.post(
 router.get(
   "/getToken",
   (req,res) => authController.refreshToken(req,res)
+);
+
+router.get(
+  "/get-all-user",
+  (req,res) => AdminController.getAllUser(req,res)
+);
+
+router.put(
+  "/user-status-change",
+  (req,res) => AdminController.changeUserStatus(req,res)
+);
+
+router.post(
+  "/logout",
+  logoutValidator,
+  (req,res) => authController.doLogOut(req,res)
 );
 
 export default router;

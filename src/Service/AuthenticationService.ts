@@ -1,7 +1,12 @@
 import { inject, injectable } from "inversify";
 import { IAuthenticationRepository } from "../Interface/IAuthenticationRepo";
 import { IAuthenticationService } from "../Interface/IAuthenticationService";
-import { NewAccountUser, getAccountUser, getUser, userToken } from "../Type/User";
+import {
+  NewAccountUser,
+  getAccountUser,
+  getUser,
+  userToken,
+} from "../Type/User";
 import { TYPES } from "../Config/types";
 import { AllError } from "../Error/ErrorCases";
 import crypto, { CipherKey } from "crypto";
@@ -25,7 +30,7 @@ export class AuthenticationService implements IAuthenticationService {
     this._roleRepo = roleRepo;
     this._jwtService = jwtservice;
   }
-  
+
   async registerUser(data: NewAccountUser): Promise<NewAccountUser> {
     console.log("inside account service");
     // const key = crypto.randomBytes(32);
@@ -37,7 +42,7 @@ export class AuthenticationService implements IAuthenticationService {
     const encrypted =
       cipher.update(data.password, "utf8", "hex") + cipher.final("hex");
     const saltIV = IV.toString();
-    const user:any = await this._authRepo.registerUser(
+    const user: any = await this._authRepo.registerUser(
       data.firstName,
       data.lastName,
       data.profilePic,
@@ -48,10 +53,10 @@ export class AuthenticationService implements IAuthenticationService {
       data.status
     );
 
-      //assigning a role
-    const addRoleToUser = await this._roleRepo.addRole(user._id,'User');
+    //assigning a role
+    const addRoleToUser = await this._roleRepo.addRole(user._id, "User");
     console.log("User service", user);
-    console.log("add role",addRoleToUser);
+    console.log("add role", addRoleToUser);
     return user;
   }
 
@@ -96,35 +101,38 @@ export class AuthenticationService implements IAuthenticationService {
         config.REFRESH_TOKEN_EXPIRES_IN
       );
 
-      await this._authRepo.createRefreshToken(user.userId,await refreshToken);  
-      
-      //set LastLoginAt  
+      await this._authRepo.createRefreshToken(user.userId, await refreshToken);
+
+      //set LastLoginAt
       await this._authRepo.setUserLastLogin(user.userId);
       return user;
     }
   }
 
   async refreshToken(userId: BigInt, refreshToken: string): Promise<string> {
-    const token = await this._authRepo.getRefreshToken(userId,refreshToken);
+    const token = await this._authRepo.getRefreshToken(userId, refreshToken);
 
-    if(!token){
-      throw new AllError('Invalid refresh token provided!','Not Found');
+    if (!token) {
+      throw new AllError("Invalid refresh token provided!", "Not Found");
     }
 
-    const user:getAccountUser = this._jwtService.verifyToken(refreshToken,config.REFRESH_TOKEN_KEY) as getAccountUser;
+    const user: getAccountUser = this._jwtService.verifyToken(
+      refreshToken,
+      config.REFRESH_TOKEN_KEY
+    ) as getAccountUser;
 
-    if(user.userId !== userId){
-      throw new AllError('Invalid user found','Not Found');
+    if (user.userId !== userId) {
+      throw new AllError("Invalid user found", "Not Found");
     }
 
     const getRole = await this._roleRepo.getroleById(userId);
 
-    const data:userToken = {
-      userId : userId,
-      firstName : user.firstName,
-      lastName : user.lastName,
-      email : user.emailId,
-      role : getRole.roleName
+    const data: userToken = {
+      userId: userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.emailId,
+      role: getRole.roleName,
     };
 
     const newAccessToken = this._jwtService.generateToken(
@@ -132,11 +140,11 @@ export class AuthenticationService implements IAuthenticationService {
       config.ACCESS_TOKEN_KEY,
       config.ACCESS_TOKEN_EXPIRES_IN
     );
-     
+
     return newAccessToken;
   }
 
-  async getAllUser():Promise<getUser>{
+  async getAllUser(): Promise<getUser> {
     const allUser = await this._authRepo.getAllUser();
     return allUser;
   }
@@ -144,15 +152,28 @@ export class AuthenticationService implements IAuthenticationService {
   async doLogOut(userId: BigInt, refreshToken: string): Promise<boolean> {
     const user = await this._authRepo.getUserById(userId);
 
-    if(user === null){
-      throw new AllError('No user exist with this Id','Bad Request');
+    if (user === null) {
+      throw new AllError("No user exist with this Id", "Bad Request");
     }
 
-    await this._authRepo.deleteRefreshToken(userId,refreshToken);
+    await this._authRepo.deleteRefreshToken(userId, refreshToken);
 
     await this._authRepo.setUserLastLogOut(userId);
 
     return true;
   }
 
+  async chnageUserStatus(userId: BigInt, status: string): Promise<any> {
+    const user = await this._authRepo.getUserById(userId);
+
+    const getRole = await this._roleRepo.getroleById(userId);
+
+    if (user === null) {
+      throw new AllError("No user exist with this Id", "Bad Request");
+    }
+
+    const statusChange = await this._authRepo.changeUserStatus(userId, status);
+
+    return statusChange;
+  }
 }

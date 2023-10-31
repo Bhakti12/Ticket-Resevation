@@ -148,14 +148,14 @@ export class AuthenticationRepository implements IAuthenticationRepository{
         }
     }
 
-    async changeUserStatus(userId : BigInt): Promise<any> {
+    async changeUserStatus(userId : BigInt,status:string): Promise<any> {
         try{
             const changeStatus = await userSchema.updateOne(
                 {
                     _id : userId
                 },
                 {
-                    status : 'Active'
+                    status : status
                 }
             );
             return changeStatus;
