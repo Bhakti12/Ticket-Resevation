@@ -10,6 +10,7 @@ import upload from "../Config/storageConfig";
 import loginUser from "../Validator/loginValidator";
 import adminController from "../Controller/AdminController";
 import logoutValidator from "../Validator/logoutValidator";
+import passport from "../Config/passport";
 
 const router = express.Router();
 const authService = Container.get<IAuthenticationService>(
@@ -38,11 +39,13 @@ router.get(
 
 router.get(
   "/get-all-user",
+  passport.authenticate('jwt', { session: false }),
   (req,res) => AdminController.getAllUser(req,res)
 );
 
 router.put(
   "/user-status-change",
+  passport.authenticate('jwt', { session: false }),
   (req,res) => AdminController.changeUserStatus(req,res)
 );
 
