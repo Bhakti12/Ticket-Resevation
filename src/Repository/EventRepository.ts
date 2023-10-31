@@ -1,8 +1,10 @@
+import { injectable } from "inversify";
 import { AllError } from "../Error/ErrorCases";
 import { IEventRepository } from "../Interface/IEventRepo";
 import { NewEvent, getEvent } from "../Type/Event";
 const eventSchema = require("../Model/eventSchema");
 
+@injectable()
 export default class eventRepository implements IEventRepository {
   async addEvent(data: NewEvent): Promise<getEvent> {
     try {
