@@ -25,9 +25,6 @@ export class AuthenticationService implements IAuthenticationService {
     this._roleRepo = roleRepo;
     this._jwtService = jwtservice;
   }
-  getAllUser(): Promise<getUser> {
-    throw new Error("Method not implemented.");
-  }
   
   async registerUser(data: NewAccountUser): Promise<NewAccountUser> {
     console.log("inside account service");
@@ -40,7 +37,7 @@ export class AuthenticationService implements IAuthenticationService {
     const encrypted =
       cipher.update(data.password, "utf8", "hex") + cipher.final("hex");
     const saltIV = IV.toString();
-    const user = await this._authRepo.registerUser(
+    const user:any = await this._authRepo.registerUser(
       data.firstName,
       data.lastName,
       data.profilePic,
@@ -50,7 +47,11 @@ export class AuthenticationService implements IAuthenticationService {
       encrypted,
       data.status
     );
+
+      //assigning a role
+    const addRoleToUser = await this._roleRepo.addRole(user._id,'User');
     console.log("User service", user);
+    console.log("add role",addRoleToUser);
     return user;
   }
 
@@ -97,6 +98,8 @@ export class AuthenticationService implements IAuthenticationService {
 
       await this._authRepo.createRefreshToken(user.userId,await refreshToken);  
       
+      //set LastLoginAt  
+      await this._authRepo.setUserLastLogin(user.userId);
       return user;
     }
   }
@@ -133,7 +136,23 @@ export class AuthenticationService implements IAuthenticationService {
     return newAccessToken;
   }
 
-  // async getAllUser():Promise<getUser>{
-    
-  // }
+  async getAllUser():Promise<getUser>{
+    const allUser = await this._authRepo.getAllUser();
+    return allUser;
+  }
+
+  async doLogOut(userId: BigInt, refreshToken: string): Promise<boolean> {
+    const user = await this._authRepo.getUserById(userId);
+
+    if(user === null){
+      throw new AllError('No user exist with this Id','Bad Request');
+    }
+
+    await this._authRepo.deleteRefreshToken(userId,refreshToken);
+
+    await this._authRepo.setUserLastLogOut(userId);
+
+    return true;
+  }
+
 }

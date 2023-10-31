@@ -41,6 +41,9 @@ var userSchema = new mongoose.Schema({
     },
     lastLoginAt : {
         type : Date
+    },
+    lastLogOutAt : {
+        type : Date
     }
 });
 
