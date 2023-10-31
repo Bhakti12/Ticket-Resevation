@@ -42,9 +42,6 @@ var eventSchema = new mongoose.Schema({
     eventStatus : {
         type : String
     },
-    eventAdminStatus : {
-        type : String
-    },
     createdAt : {
         type : Date,
         default : Date.now()
