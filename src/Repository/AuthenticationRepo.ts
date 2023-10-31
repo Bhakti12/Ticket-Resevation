@@ -7,7 +7,7 @@ const refreshTokenSchema = require("../Model/refreshTokenSchema");
 
 @injectable()
 export class AuthenticationRepository implements IAuthenticationRepository{
-    async registerUser(firstName:string,lastName:string,profilePic:string | null,idProof:string | null,mobileNo:string,emailId:string,password:string,status:string,salt?:string): Promise<NewAccountUser> {
+    async registerUser(firstName:string,lastName:string,profilePic:string | null,idProof:string | null,mobileNo:string,emailId:string,password:string,status:string): Promise<NewAccountUser> {
         try{
             console.log("inside accountrepo");
             const User = await userSchema.create({
@@ -18,8 +18,7 @@ export class AuthenticationRepository implements IAuthenticationRepository{
                     mobileNo,
                     emailId,
                     password,
-                    status,
-                    salt
+                    status
             });
             console.log("user",User);
             console.log(User.firstName,User.lastName,User.profilePic,User.idProof,User.emailId);
@@ -44,7 +43,7 @@ export class AuthenticationRepository implements IAuthenticationRepository{
             const password = user.password;
             const status = user.status;
             const salt = user.salt;
-            return {userId,firstName,lastName,profilePic,idProof,mobileNo,emailId,password,status,salt};
+            return {userId,firstName,lastName,profilePic,idProof,mobileNo,emailId,password,status};
         }catch(err){
             throw new AllError('An error occured while interacting with the database','Internal Server Error');
         }

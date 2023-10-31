@@ -45,8 +45,7 @@ export class AuthenticationService implements IAuthenticationService {
       data.mobileNo,
       data.emailId,
       encrypted,
-      data.status,
-      saltIV
+      data.status
     );
     console.log("User service", user);
     return user;

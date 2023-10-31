@@ -27,8 +27,7 @@ async function initializeDatabase(){
             password : encrypted,
             mobileNo : '1234567890',
             emailId : 'can.y@yopmail.com',
-            status : 'Active',
-            salt : IV
+            status : 'Active'
         });
     
         const createRole = await roleSchema.create({

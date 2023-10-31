@@ -28,9 +28,6 @@ var userSchema = new mongoose.Schema({
     status : {
         type : String
     },
-    salt : {
-        type : String
-    },
     createdAt : {
         type : Date,
         default : Date.now()

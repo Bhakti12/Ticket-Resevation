@@ -24,20 +24,18 @@ export default class AuthenticationController extends globalSuccessHandler {
         mobileNo,
         emailId,
         password,
-        status,
-        salt,
+        status
       } = req.body;
 
       const newUser: NewAccountUser = {
         firstName,
         lastName,
-        profilePic:"",
-        idProof:"",
+        profilePic: "",
+        idProof: "",
         mobileNo,
         emailId,
         password,
-        status,
-        salt: "",
+        status
       };
 
       let file;
@@ -45,14 +43,14 @@ export default class AuthenticationController extends globalSuccessHandler {
       for (const key in req.files) {
         file = req.files[key];
         //console.log("file", file);
-        if(Array.isArray(file)){
-          const fileUrl = file.map((f)=>{
+        if (Array.isArray(file)) {
+          const fileUrl = file.map((f) => {
             return `D:/Ticket-Reservation/Ticket-Resevation/src/public/${f.filename}`;
-          });   
+          });
 
-          if(key === 'profilePic'){
+          if (key === "profilePic") {
             newUser.profilePic = fileUrl.join(", ");
-          }else if(key === 'idProof'){
+          } else if (key === "idProof") {
             newUser.idProof = fileUrl.join(", ");
           }
         }

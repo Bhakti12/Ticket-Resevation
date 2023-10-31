@@ -6,8 +6,7 @@ export declare type NewAccountUser = {
     mobileNo : string,
     emailId : string,
     password : string,
-    status : string,
-    salt?: string
+    status : string
 };
 
 export declare type getAccountUser = {
@@ -19,8 +18,7 @@ export declare type getAccountUser = {
     mobileNo : string,
     emailId : string,
     password : string,
-    status : string,
-    salt?: string
+    status : string
 };
 
 export declare type RefreshToken = {
