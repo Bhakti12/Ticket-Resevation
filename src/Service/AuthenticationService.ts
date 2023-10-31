@@ -25,9 +25,6 @@ export class AuthenticationService implements IAuthenticationService {
     this._roleRepo = roleRepo;
     this._jwtService = jwtservice;
   }
-  getAllUser(): Promise<getUser> {
-    throw new Error("Method not implemented.");
-  }
   
   async registerUser(data: NewAccountUser): Promise<NewAccountUser> {
     console.log("inside account service");
@@ -139,7 +136,23 @@ export class AuthenticationService implements IAuthenticationService {
     return newAccessToken;
   }
 
-  // async getAllUser():Promise<getUser>{
-    
-  // }
+  async getAllUser():Promise<getUser>{
+    const allUser = await this._authRepo.getAllUser();
+    return allUser;
+  }
+
+  async doLogOut(userId: BigInt, refreshToken: string): Promise<boolean> {
+    const user = await this._authRepo.getUserById(userId);
+
+    if(user === null){
+      throw new AllError('No user exist with this Id','Bad Request');
+    }
+
+    await this._authRepo.deleteRefreshToken(userId,refreshToken);
+
+    await this._authRepo.setUserLastLogOut(userId);
+
+    return true;
+  }
+
 }

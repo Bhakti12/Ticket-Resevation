@@ -147,4 +147,20 @@ export class AuthenticationRepository implements IAuthenticationRepository{
             throw new AllError('An error occured while interacting with the database','Internal Server Error');
         }
     }
+
+    async changeUserStatus(userId : BigInt): Promise<any> {
+        try{
+            const changeStatus = await userSchema.updateOne(
+                {
+                    _id : userId
+                },
+                {
+                    status : 'Active'
+                }
+            );
+            return changeStatus;
+        }catch(err){
+            throw new AllError('An error occured while interacting with the database','Internal Server Error');
+        }
+    }
 }
