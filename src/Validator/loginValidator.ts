@@ -1,19 +1,7 @@
-import {checkSchema} from "express-validator";
+import { checkSchema } from "express-validator";
 
-const registerUser = checkSchema({
-    firstName : {
-        in:'body',
-        notEmpty:{
-            errorMessage : `firstName can't be empty`
-        }
-    },
-    lastName : {
-        in:'body',
-        notEmpty:{
-            errorMessage : `firstName can't be empty`
-        }
-    },
-    emailId: {
+const loginUser = checkSchema({
+    emailId : {
         in: 'body',
         toLowerCase: true,
         exists: {
@@ -34,7 +22,7 @@ const registerUser = checkSchema({
         trim: true,
         stripLow: true,
     },
-    password: {
+    password : {
         in: 'body',
         exists: {
             errorMessage: 'Password is required.',
@@ -50,13 +38,7 @@ const registerUser = checkSchema({
         },
         trim: true,
         stripLow: true,
-    },
-    profilePic: {
-        in: 'body',
-    },
-    idProof: {
-        in: 'body',
     }
 });
 
-export default registerUser;
+export default loginUser;

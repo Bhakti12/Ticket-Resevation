@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
 import express from 'express';
-import TestController from '../Controllers/TestController';
+import TestController from '../Controller/TestController';
 import { TestService } from '../Service/TestService';
 import { iocContainer as Container } from '../Config/container';
-import { ITestService } from '../Interfaces/ITestService';
+import { ITestService } from '../Interface/ITestService';
 import { TYPES } from '../Config/types';
 
 const router = express.Router();

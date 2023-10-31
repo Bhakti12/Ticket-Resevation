@@ -22,10 +22,10 @@ var userSchema = new mongoose.Schema({
     mobileNo : {
         type : String
     },
-    email : {
+    emailId : {
         type : String
     },
-    accountStatus : {
+    status : {
         type : String
     },
     createdAt : {
@@ -38,6 +38,9 @@ var userSchema = new mongoose.Schema({
     },
     isDelete : {
         type : Number
+    },
+    lastLoginAt : {
+        type : Date
     }
 });
 

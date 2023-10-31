@@ -1,6 +1,6 @@
 import { injectable,inject } from "inversify";
-import { ITestRepository } from "../Interfaces/ITestRepo";
-import { ITestService } from "../Interfaces/ITestService";
+import { ITestRepository } from "../Interface/ITestRepo";
+import { ITestService } from "../Interface/ITestService";
 import { TYPES } from "../Config/types";
 import { AllError } from "../Error/ErrorCases";
 

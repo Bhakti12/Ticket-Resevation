@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { ITestRepository } from "../Interfaces/ITestRepo";
+import { ITestRepository } from "../Interface/ITestRepo";
 import { AllError } from "../Error/ErrorCases";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
 const ObjectID = require('mongodb').ObjectID;
