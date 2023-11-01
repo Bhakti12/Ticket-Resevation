@@ -11,13 +11,17 @@ import loginUser from "../Validator/loginValidator";
 import adminController from "../Controller/AdminController";
 import logoutValidator from "../Validator/logoutValidator";
 import passport from "../Config/passport";
+import { IAdminService } from "../Interface/IAdminService";
 
 const router = express.Router();
 const authService = Container.get<IAuthenticationService>(
   TYPES.AuthenticationService
 );
+const adminService = Container.get<IAdminService>(
+  TYPES.AdminService
+);
 const authController = new AuthenticationController(authService);
-const AdminController = new adminController(authService);
+const AdminController = new adminController(authService,adminService);
 
 router.post(
   "/register",

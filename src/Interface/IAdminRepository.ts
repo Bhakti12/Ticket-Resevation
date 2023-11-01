@@ -1,5 +1,5 @@
 import { getUser } from "../Type/User";
 
-export interface IAdminService{
+export interface IAdminRepository{
     getAllUser():Promise<getUser>;
 }

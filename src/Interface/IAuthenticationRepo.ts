@@ -5,7 +5,6 @@ export interface IAuthenticationRepository{
     getUserbyEmailId(emailId:string):Promise<getAccountUser>;
     createRefreshToken(userId:BigInt|null,token:string):Promise<void>;
     getRefreshToken(userId:BigInt | null,token:string):Promise<RefreshToken>;
-    getAllUser():Promise<getUser>;
     getUserById(userId:BigInt):Promise<getUser>;
     deleteRefreshToken(userId:BigInt,token:string):Promise<void>;
     setUserLastLogOut(userId:BigInt):Promise<void>;

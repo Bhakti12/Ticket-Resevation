@@ -166,10 +166,7 @@ export class AuthenticationService implements IAuthenticationService {
     return newAccessToken;
   }
 
-  async getAllUser(): Promise<getUser> {
-    const allUser = await this._authRepo.getAllUser();
-    return allUser;
-  }
+  
 
   async doLogOut(userId: BigInt, refreshToken: string): Promise<boolean> {
     const user = await this._authRepo.getUserById(userId);
