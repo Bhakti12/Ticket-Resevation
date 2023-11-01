@@ -19,6 +19,7 @@ export default class eventService implements IEventService{
     }
     
     async getEvent(): Promise<getEvent> {
-        throw new Error("Not implemeted");
+        const getEvent = await this._eventRepo.getEvent();
+        return getEvent;
     }
 }
