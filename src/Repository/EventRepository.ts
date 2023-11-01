@@ -46,7 +46,7 @@ export default class eventRepository implements IEventRepository {
 
   async getEvent(): Promise<getEvent> {
     try{
-      
+      throw new Error("not implemented");
     }catch(err){
       throw new AllError(
         "An error occured while interacting with the database",
