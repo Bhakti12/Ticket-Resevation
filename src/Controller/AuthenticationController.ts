@@ -114,7 +114,8 @@ export default class AuthenticationController extends globalSuccessHandler {
   async doLogOut(req:express.Request,res:express.Response){
     try{
       const { userId, refreshToken } = req.body;
-
+      const logout = await this._authService.doLogOut(userId,refreshToken);
+      this.sendJsonResponse(res, null, { size: 1 }, logout);
     }catch(err){
       this.sendErrorResponse(req,res,err);
     }
