@@ -10,6 +10,13 @@ export declare type NewAccountUser = {
     status : string
 };
 
+export declare type login = {
+    userId : BigInt,
+    accessToken : string,
+    refreshToken : string,
+    emailId : string
+};
+
 export declare type getAccountUser = {
     userId : BigInt,
     firstName : string,

@@ -34,7 +34,8 @@ export class AuthenticationRepository implements IAuthenticationRepository{
             const user = await userSchema.findOne({
                 emailId : email
             });
-            const userId = user.userId;
+            console.log("user repository",user);
+            const userId = user._id;
             const firstName = user.firstName;
             const lastName = user.lastName;
             const profilePic = user.profilePic;
@@ -43,7 +44,8 @@ export class AuthenticationRepository implements IAuthenticationRepository{
             const mobileNo = user.mobileNo;
             const password = user.password;
             const status = user.status;
-            const salt = user.salt;
+            //const salt = user.salt;
+            console.log("userId repository",userId);
             return {userId,firstName,lastName,profilePic,idProof,mobileNo,emailId,password,status};
         }catch(err){
             throw new AllError('An error occured while interacting with the database','Internal Server Error');

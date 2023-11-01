@@ -1,4 +1,4 @@
-import { NewAccountUser, getUser } from "../Type/User";
+import { NewAccountUser, getUser, login } from "../Type/User";
 
 export interface IAuthenticationService{
     registerUser(data:NewAccountUser):Promise<NewAccountUser>;

@@ -5,6 +5,7 @@ import {
   NewAccountUser,
   getAccountUser,
   getUser,
+  login,
   userToken,
 } from "../Type/User";
 import { TYPES } from "../Config/types";
@@ -62,9 +63,15 @@ export class AuthenticationService implements IAuthenticationService {
 
   async loginAccount(email: string, password: string): Promise<any> {
     const user = await this._authRepo.getUserbyEmailId(email);
+    console.log("user",user);
+
+    if(user.status === "Inactive"){
+      throw new AllError('User is Inactive','Bad Request');
+    }
+
     const key = config.KEY;
     const IV = config.IV;
-    console.log("IV", IV);
+    //console.log("IV", IV);
     let cipher = crypto.createCipheriv("aes-256-cbc", key, IV);
     //cipher.setAutoPadding(true);
     const encrypted =
@@ -89,23 +96,38 @@ export class AuthenticationService implements IAuthenticationService {
         role: getRole.roleName,
       };
 
-      const accessToken = this._jwtService.generateToken(
+      const accessToken = await this._jwtService.generateToken(
         data,
         config.ACCESS_TOKEN_KEY,
         config.ACCESS_TOKEN_EXPIRES_IN
       );
+      
+        console.log("accessTOken",accessToken);
 
-      const refreshToken = this._jwtService.generateToken(
+      const refreshToken = await this._jwtService.generateToken(
         data,
         config.REFRESH_TOKEN_KEY,
         config.REFRESH_TOKEN_EXPIRES_IN
       );
 
-      await this._authRepo.createRefreshToken(user.userId, await refreshToken);
+        console.log("refresh token",refreshToken);
+
+        console.log("userId",user.userId);
+      await this._authRepo.createRefreshToken(user.userId, refreshToken);
+      //console.log(token);
 
       //set LastLoginAt
       await this._authRepo.setUserLastLogin(user.userId);
-      return user;
+      //console.log("set time and date",set);
+
+        const loginDetails:login = {
+          userId : user.userId,
+          accessToken : accessToken,
+          refreshToken : refreshToken,
+          emailId : user.emailId
+        };
+
+      return loginDetails;
     }
   }
 

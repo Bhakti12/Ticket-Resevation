@@ -19,9 +19,13 @@ passport.use(
         //     },
         // });
 
+        console.log("userId",payload.data.userId);
+
         const user = await userSchema.findOne({
-            _id : (<getAccountUser>payload).userId
+            _id : payload.data.userId
         });
+
+        console.log("user passport",user);
 
         // If the user is not present
         if (!user) {
