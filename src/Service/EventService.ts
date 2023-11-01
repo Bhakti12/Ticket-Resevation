@@ -22,4 +22,9 @@ export default class eventService implements IEventService{
         const getEvent = await this._eventRepo.getEvent();
         return getEvent;
     }
+
+    async getEventById(eventId: BigInt): Promise<getEvent> {
+        const getEventbyUserId = await this._eventRepo.getEventById(eventId);
+        return getEventbyUserId;
+    }
 }

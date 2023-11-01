@@ -24,4 +24,10 @@ router.get(
   (req, res) => EventController.getEvent(req, res)
 );
 
+router.get(
+  "/get-event-by-Id",
+  passport.authenticate("jwt", { session: false }),
+  (req,res) => EventController.getEventById(req,res)
+);
+
 export default router;

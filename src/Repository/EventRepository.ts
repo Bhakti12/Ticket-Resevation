@@ -57,4 +57,32 @@ export default class eventRepository implements IEventRepository {
       );
     }
   }
+
+  async getEventById(eventId: BigInt): Promise<getEvent> {
+    try{
+      const getEventbyUserId = await eventSchema.findOne({
+        _id : eventId
+      });
+      const eventName = getEventbyUserId.eventName;
+      const eventDescription = getEventbyUserId.eventDescription;
+      const location = getEventbyUserId.location;
+      const mapLink = getEventbyUserId.mapLink;
+      const startDate = getEventbyUserId.startDate;
+      const endDate = getEventbyUserId.endDate;
+      const registrationStartDate = getEventbyUserId.registrationStartDate;
+      const registrationEndDate = getEventbyUserId.registrationEndDate;
+      const price = getEventbyUserId.price;
+      const posterImages = getEventbyUserId.posterImages;
+      const availableSeats = getEventbyUserId.availableSeats;
+      const eventStatus = getEventbyUserId.eventStatus;
+      const userId = getEventbyUserId.userId;
+      return {eventId,eventName,eventDescription,location,mapLink,startDate,endDate,registrationStartDate,registrationEndDate,price,posterImages,availableSeats,eventStatus,userId};
+    }catch(err){
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+
 }
