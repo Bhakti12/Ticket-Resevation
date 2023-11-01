@@ -21,6 +21,7 @@ export default class eventRepository implements IEventRepository {
       const posterImages = data.posterImages;
       const availableSeats = data.availableSeats;
       const eventStatus = data.eventStatus;
+      const userId = data.userId;
       const addEvent = await eventSchema.create({
         eventName: eventName,
         eventDescription: eventDescription,
@@ -34,6 +35,7 @@ export default class eventRepository implements IEventRepository {
         posterImages: posterImages,
         availableSeats: availableSeats,
         eventStatus: eventStatus,
+        userId: userId
       });
       return addEvent;
     } catch (err) {
@@ -46,7 +48,8 @@ export default class eventRepository implements IEventRepository {
 
   async getEvent(): Promise<getEvent> {
     try{
-      throw new Error("not implemented");
+      const getEvent = await eventSchema.find({});
+      return getEvent;
     }catch(err){
       throw new AllError(
         "An error occured while interacting with the database",

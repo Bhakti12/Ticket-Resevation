@@ -11,6 +11,6 @@ const router = express.Router();
 const eventService = Container.get<IEventService>(TYPES.EventService);
 const EventController = new eventController(eventService);
 
-router.get('/add-event', passport.authenticate('jwt', { session: false }), eventValidator, (req, res) => EventController.addEvent(req,res));
+router.post('/add-event', passport.authenticate('jwt', { session: false }), eventValidator, (req, res) => EventController.addEvent(req,res));
 
 export default router;

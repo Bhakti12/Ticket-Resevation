@@ -10,7 +10,8 @@ export declare type NewEvent = {
     price : Number,
     posterImages : string,
     availableSeats : Number,
-    eventStatus : string
+    eventStatus : string,
+    userId : BigInt
 };
 
 export declare type getEvent = {
@@ -26,7 +27,8 @@ export declare type getEvent = {
     price : Number,
     posterImages : string,
     availableSeats : Number,
-    eventStatus : string
+    eventStatus : string,
+    userId : BigInt
 };
 
 export declare type getAllEvents = {
@@ -43,6 +45,7 @@ export declare type getAllEvents = {
     posterImages : string,
     availableSeats : Number,
     eventStatus : string,
+    userId : BigInt,
     userName : string,
     createdAt : Date,
     updatedAt : Date
