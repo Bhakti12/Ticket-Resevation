@@ -203,23 +203,4 @@ export class AuthenticationRepository implements IAuthenticationRepository {
       );
     }
   }
-
-  async changeUserStatus(userId: BigInt, status: string): Promise<any> {
-    try {
-      const changeStatus = await userSchema.updateOne(
-        {
-          _id: userId,
-        },
-        {
-          status: status,
-        }
-      );
-      return changeStatus;
-    } catch (err) {
-      throw new AllError(
-        "An error occured while interacting with the database",
-        "Internal Server Error"
-      );
-    }
-  }
 }

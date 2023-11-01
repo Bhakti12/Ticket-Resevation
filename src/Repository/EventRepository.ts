@@ -6,6 +6,7 @@ const eventSchema = require("../Model/eventSchema");
 
 @injectable()
 export default class eventRepository implements IEventRepository {
+  
   async addEvent(data: NewEvent): Promise<getEvent> {
     try {
       const eventName = data.eventName;
@@ -36,6 +37,17 @@ export default class eventRepository implements IEventRepository {
       });
       return addEvent;
     } catch (err) {
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+
+  async getEvent(): Promise<getEvent> {
+    try{
+      
+    }catch(err){
       throw new AllError(
         "An error occured while interacting with the database",
         "Internal Server Error"

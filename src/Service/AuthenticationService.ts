@@ -182,17 +182,4 @@ export class AuthenticationService implements IAuthenticationService {
     return true;
   }
 
-  async chnageUserStatus(userId: BigInt, status: string): Promise<any> {
-    const user = await this._authRepo.getUserById(userId);
-
-    const getRole = await this._roleRepo.getroleById(userId);
-
-    if (user === null) {
-      throw new AllError("No user exist with this Id", "Bad Request");
-    }
-
-    const statusChange = await this._authRepo.changeUserStatus(userId, status);
-
-    return statusChange;
-  }
 }

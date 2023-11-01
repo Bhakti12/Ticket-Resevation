@@ -37,4 +37,12 @@ export default class adminController extends globalSuccessHandler{
             this.sendErrorResponse(req,res,err);
         }
     }
+
+    async getAllEvents(req:express.Request,res:express.Response){
+        try{
+            
+        }catch(err){
+            this.sendErrorResponse(req,res,err);
+        }
+    }
 }

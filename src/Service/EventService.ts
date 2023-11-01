@@ -12,10 +12,14 @@ export default class eventService implements IEventService{
     constructor(@inject(TYPES.EventRepository) eventRepo : IEventRepository){
         this._eventRepo = eventRepo;
     }
-
+    
     async addEvent(data: NewEvent): Promise<getEvent> {
         const addEvent = await this._eventRepo.addEvent(data);
         return addEvent;
     }
     
+    async getEvent(): Promise<getEvent> {
+        const events:getEvent = {};
+        return events;
+    }
 }
