@@ -1,5 +1,5 @@
 import express from "express";
-import { NewAccountUser } from "../Type/User";
+import { NewAccountUser, login } from "../Type/User";
 import multer from "multer";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
 import { IAuthenticationService } from "../Interface/IAuthenticationService";
@@ -80,16 +80,23 @@ export default class AuthenticationController extends globalSuccessHandler {
     try {
       const { emailId, password } = req.body;
       console.log("req.body", req.body);
-      const login = this._authService.loginAccount(emailId, password);
+      const verifyLogin = await this._authService.loginAccount(emailId, password);
+      const data = {
+        userId : verifyLogin.userId,
+        accessToken : verifyLogin.accessToken,
+        refreshToken : verifyLogin.refreshToken,
+        emailId : verifyLogin.emailId
+      }
       this.sendJsonResponse(
         res,
         "Login sucessfully!",
         {
           length: 1,
         },
-        login
+        data
       );
     } catch (err) {
+      console.log(err);
       this.sendErrorResponse(req, res, err);
     }
   }
@@ -107,7 +114,8 @@ export default class AuthenticationController extends globalSuccessHandler {
   async doLogOut(req:express.Request,res:express.Response){
     try{
       const { userId, refreshToken } = req.body;
-
+      const logout = await this._authService.doLogOut(userId,refreshToken);
+      this.sendJsonResponse(res, null, { size: 1 }, logout);
     }catch(err){
       this.sendErrorResponse(req,res,err);
     }

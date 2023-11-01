@@ -57,4 +57,13 @@ export default class eventController extends globalSuccessHandler {
       this.sendErrorResponse(req, res, err);
     }
   }
+
+  async getEvent(req:express.Request,res:express.Response){
+    try{
+      
+    }catch(err){
+      console.log(err);
+      this.sendErrorResponse(req,res,err);
+    }
+  }
 }

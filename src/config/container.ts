@@ -20,6 +20,10 @@ import { IEventRepository } from "../Interface/IEventRepo";
 import eventRepository from "../Repository/EventRepository";
 import { IEventService } from "../Interface/IEventService";
 import eventService from "../Service/EventService";
+import { IAdminRepository } from "../Interface/IAdminRepository";
+import AdminRepository from "../Repository/AdminRepository";
+import { IAdminService } from "../Interface/IAdminService";
+import AdminService from "../Service/AdminService";
 
 const iocContainer = new Container();
 
@@ -35,6 +39,9 @@ iocContainer.bind<IRoleService>(TYPES.RoleService).to(roleService);
 
 iocContainer.bind<IEventRepository>(TYPES.EventRepository).to(eventRepository);
 iocContainer.bind<IEventService>(TYPES.EventService).to(eventService);
+
+iocContainer.bind<IAdminRepository>(TYPES.AdminRepository).to(AdminRepository),
+iocContainer.bind<IAdminService>(TYPES.AdminService).to(AdminService)
 
 iocContainer.bind<IJwtService>(TYPES.JwtService).to(jwtService);
 export {iocContainer};
