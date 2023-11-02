@@ -31,7 +31,8 @@ export default class AdminService implements IAdminService{
     }
 
     async getAllEvents(): Promise<getAllEvents> {
-        throw new Error("Method not implemented.");
+        const getEvents = await this._adminRepo.getAllEvents();
+        return getEvents;
     }
 
     async chnageUserStatus(userId: BigInt, status: string): Promise<any> {

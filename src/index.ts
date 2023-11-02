@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({extended : false}));
 //console.log("executing database");
 DatabaseConnection();
 
-app.use(IndexRouter.testRoute,IndexRouter.authRoute,IndexRouter.eventRoute,IndexRouter.roleRoute);
+app.use(IndexRouter.testRoute,IndexRouter.authRoute,IndexRouter.eventRoute,IndexRouter.roleRoute,IndexRouter.adminRoute);
 
 app.listen(port,()=>{
     console.log(`server is running on port ${port}`);
