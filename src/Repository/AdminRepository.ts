@@ -66,7 +66,6 @@ export default class AdminRepository implements IAdminRepository {
         model: "User",
         select: { firstName: 1, lastName: 1, emailId: 1 },
       });
-      console.log("events", events);
       return events.filter((res)=>{
         return res._id,
         res.eventName,

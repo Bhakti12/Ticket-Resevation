@@ -27,4 +27,13 @@ export default class eventService implements IEventService{
         const getEventbyUserId = await this._eventRepo.getEventById(eventId);
         return getEventbyUserId;
     }
+
+    async editEvent(data: NewEvent, userId: BigInt): Promise<getEvent> {
+        throw new Error("Method not implemented.");
+    }
+
+    async statusChangeOfEvent(eventId: BigInt, status: string): Promise<getEvent> {
+        const changeStatus = await this._eventRepo.statusChangeOfEvent(eventId,status);
+        return changeStatus;
+    }
 }

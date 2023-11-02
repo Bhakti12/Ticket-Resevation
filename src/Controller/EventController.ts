@@ -84,4 +84,24 @@ export default class eventController extends globalSuccessHandler {
       this.sendErrorResponse(req, res, err);
     }
   }
+
+  async editEvent(req: express.Request, res: express.Response) {
+    try {
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
+    }
+  }
+
+  async changeStatusOfEvent(req: express.Request, res: express.Response) {
+    try {
+      const { eventId, status } = req.body;
+      const changeStatus = await this._eventService.statusChangeOfEvent(
+        eventId,
+        status
+      );
+      this.sendJsonResponse(res, "status changed", { length: 1 }, changeStatus);
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
+    }
+  }
 }

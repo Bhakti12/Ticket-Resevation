@@ -6,7 +6,6 @@ const eventSchema = require("../Model/eventSchema");
 
 @injectable()
 export default class eventRepository implements IEventRepository {
-  
   async addEvent(data: NewEvent): Promise<getEvent> {
     try {
       const eventName = data.eventName;
@@ -35,7 +34,7 @@ export default class eventRepository implements IEventRepository {
         posterImages: posterImages,
         availableSeats: availableSeats,
         eventStatus: eventStatus,
-        userId: userId
+        userId: userId,
       });
       return addEvent;
     } catch (err) {
@@ -47,10 +46,10 @@ export default class eventRepository implements IEventRepository {
   }
 
   async getEvent(): Promise<getEvent> {
-    try{
+    try {
       const getEvent = await eventSchema.find({});
       return getEvent;
-    }catch(err){
+    } catch (err) {
       throw new AllError(
         "An error occured while interacting with the database",
         "Internal Server Error"
@@ -59,9 +58,9 @@ export default class eventRepository implements IEventRepository {
   }
 
   async getEventById(eventId: BigInt): Promise<getEvent> {
-    try{
+    try {
       const getEventbyUserId = await eventSchema.findOne({
-        _id : eventId
+        _id: eventId,
       });
       const eventName = getEventbyUserId.eventName;
       const eventDescription = getEventbyUserId.eventDescription;
@@ -76,8 +75,23 @@ export default class eventRepository implements IEventRepository {
       const availableSeats = getEventbyUserId.availableSeats;
       const eventStatus = getEventbyUserId.eventStatus;
       const userId = getEventbyUserId.userId;
-      return {eventId,eventName,eventDescription,location,mapLink,startDate,endDate,registrationStartDate,registrationEndDate,price,posterImages,availableSeats,eventStatus,userId};
-    }catch(err){
+      return {
+        eventId,
+        eventName,
+        eventDescription,
+        location,
+        mapLink,
+        startDate,
+        endDate,
+        registrationStartDate,
+        registrationEndDate,
+        price,
+        posterImages,
+        availableSeats,
+        eventStatus,
+        userId,
+      };
+    } catch (err) {
       throw new AllError(
         "An error occured while interacting with the database",
         "Internal Server Error"
@@ -85,4 +99,48 @@ export default class eventRepository implements IEventRepository {
     }
   }
 
+  async editEvent(data: NewEvent, userId: BigInt): Promise<getEvent> {
+    try {
+      throw new Error("not implemented");
+    } catch (err) {
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+
+  async statusChangeOfEvent(eventId: BigInt, status: string): Promise<getEvent> {
+    try {
+      const changeStatus = await eventSchema.updateOne(
+        {
+          _id: eventId,
+        },
+        {
+          eventStatus: status,
+        }
+      );
+      return {
+        eventId: changeStatus._id,
+        eventName: changeStatus.eventName,
+        eventDescription: changeStatus.eventDescription,
+        location: changeStatus.location,
+        mapLink: changeStatus.mapLink,
+        startDate: changeStatus.startDate,
+        endDate: changeStatus.endDate,
+        registrationStartDate: changeStatus.registrationStartDate,
+        registrationEndDate: changeStatus.registrationEndDate,
+        price: changeStatus.price,
+        posterImages: changeStatus.posterImages,
+        availableSeats: changeStatus.availableSeats,
+        eventStatus: changeStatus.eventStatus,
+        userId: changeStatus.userId,
+      };
+    } catch (err) {
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
 }

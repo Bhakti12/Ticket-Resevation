@@ -27,7 +27,13 @@ router.get(
 router.get(
   "/get-event-by-Id",
   passport.authenticate("jwt", { session: false }),
-  (req,res) => EventController.getEventById(req,res)
+  (req, res) => EventController.getEventById(req, res)
+);
+
+router.put(
+  "/set-status-event",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => EventController.changeStatusOfEvent(req, res)
 );
 
 export default router;
