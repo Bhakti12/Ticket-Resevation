@@ -67,25 +67,25 @@ export default class AdminRepository implements IAdminRepository {
         select: { firstName: 1, lastName: 1, emailId: 1 },
       });
       console.log("events", events);
-      return {
-        eventId: events.eventId,
-        eventName: events.eventName,
-        eventDescription: events.eventDescription,
-        location: events.location,
-        mapLink: events.mapLink,
-        startDate: events.startDate,
-        endDate: events.endDate,
-        registrationStartDate: events.registrationStartDate,
-        registrationEndDate: events.registrationEndDate,
-        price: events.price,
-        posterImages: events.posterImages,
-        availableSeats: events.availableSeats,
-        eventStatus: events.eventStatus,
-        userId: events.userId,
-        userName: events.userName,
-        createdAt: events.createdAt,
-        updatedAt: events.updatedAt,
-      };
+      return events.filter((res)=>{
+        return res._id,
+        res.eventName,
+        res.eventDescription,
+        res.location,
+        res.mapLink,
+        res.startDate,
+        res.endDate,
+        res.registrationStartDate,
+        res.registrationEndDate,
+        res.price,
+        res.posterImages,
+        res.availableSeats,
+        res.eventStatus,
+        res.userId._id,
+        res.userId.firstName + " " + res.userId.lastName,
+        res.createdAt,
+        res.updatedAt
+      });
     } catch (err) {
       throw new AllError(
         "An error occured while interacting with the database",

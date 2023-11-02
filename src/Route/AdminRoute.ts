@@ -29,7 +29,7 @@ router.put(
 router.get(
   "/get-events",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => AdminController.getAllEvents(req, res)
+  (req,res) => AdminController.getAllEvents(req,res)
 );
 
 export default router;
