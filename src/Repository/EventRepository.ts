@@ -99,9 +99,33 @@ export default class eventRepository implements IEventRepository {
     }
   }
 
-  async editEvent(data: NewEvent, userId: BigInt): Promise<getEvent> {
+  async editEvent(data: NewEvent, eventId: BigInt): Promise<getEvent> {
     try {
-      throw new Error("not implemented");
+      let dataTobeUpdate: NewEvent = {
+        eventName: data.eventName,
+        eventDescription: data.eventDescription,
+        location: data.location,
+        mapLink: data.mapLink,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        registrationStartDate: data.registrationStartDate,
+        registrationEndDate: data.registrationEndDate,
+        price: data.price,
+        posterImages: data.posterImages,
+        availableSeats: data.availableSeats,
+        eventStatus: data.eventStatus,
+        userId: data.userId,
+      };
+      const editEvent = await eventSchema.findByIdAndUpdate(
+        {
+          _id: eventId,
+        },
+        dataTobeUpdate,
+        {
+          new: true,
+        }
+      );
+      return editEvent;
     } catch (err) {
       throw new AllError(
         "An error occured while interacting with the database",
@@ -110,7 +134,10 @@ export default class eventRepository implements IEventRepository {
     }
   }
 
-  async statusChangeOfEvent(eventId: BigInt, status: string): Promise<getEvent> {
+  async statusChangeOfEvent(
+    eventId: BigInt,
+    status: string
+  ): Promise<getEvent> {
     try {
       const changeStatus = await eventSchema.updateOne(
         {

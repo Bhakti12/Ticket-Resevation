@@ -31,6 +31,12 @@ router.get(
 );
 
 router.put(
+  "/edit-event",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => EventController.editEvent(req,res)
+);
+
+router.put(
   "/set-status-event",
   passport.authenticate("jwt", { session: false }),
   (req, res) => EventController.changeStatusOfEvent(req, res)

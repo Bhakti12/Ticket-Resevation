@@ -12,13 +12,6 @@ const options: StrategyOptions = {
 
 passport.use(
     new JwtStrategy(options, async (payload: any, done) => {
-        // Gets the user
-        // const user = await client.accountUser.findFirst({
-        //     where: {
-        //         id: BigInt((<UserToken>payload).id),
-        //     },
-        // });
-
         console.log("userId",payload.data.userId);
 
         const user = await userSchema.findOne({

@@ -3,6 +3,7 @@ import { IEventRepository } from "../Interface/IEventRepo";
 import { IEventService } from "../Interface/IEventService";
 import { NewEvent, getEvent } from "../Type/Event";
 import { TYPES } from "../Config/types";
+import { AllError } from "../Error/ErrorCases";
 
 @injectable()
 export default class eventService implements IEventService{
@@ -20,19 +21,42 @@ export default class eventService implements IEventService{
     
     async getEvent(): Promise<getEvent> {
         const getEvent = await this._eventRepo.getEvent();
+
+        if(!getEvent){
+            throw new AllError("There aren't any event, make new event","Not Found");
+        }
+
         return getEvent;
     }
 
     async getEventById(eventId: BigInt): Promise<getEvent> {
         const getEventbyUserId = await this._eventRepo.getEventById(eventId);
+
+        if(!getEventbyUserId){
+            throw new AllError("Event not found","Not Found");
+        }
+
         return getEventbyUserId;
     }
 
-    async editEvent(data: NewEvent, userId: BigInt): Promise<getEvent> {
-        throw new Error("Method not implemented.");
+    async editEvent(data: NewEvent, eventId: BigInt): Promise<getEvent> {
+        const getEvent = await this._eventRepo.getEventById(eventId);
+
+        if(!getEvent){
+            throw new AllError("Event not found","Not Found");
+        }
+
+        const editEvent = await this._eventRepo.editEvent(data,eventId);
+        return editEvent;
     }
 
     async statusChangeOfEvent(eventId: BigInt, status: string): Promise<getEvent> {
+        const getEvent = await this._eventRepo.getEventById(eventId);
+
+        if(!getEvent){
+            throw new AllError("Event not found","Not Found");
+        }
+
         const changeStatus = await this._eventRepo.statusChangeOfEvent(eventId,status);
         return changeStatus;
     }
