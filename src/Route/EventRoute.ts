@@ -42,4 +42,10 @@ router.put(
   (req, res) => EventController.changeStatusOfEvent(req, res)
 );
 
+router.delete(
+  "/delete-event",
+  passport.authenticate("jwt", { session: false }),
+  (req,res) => EventController.deleteEvent(req,res)
+);
+
 export default router;

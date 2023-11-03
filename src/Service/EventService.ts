@@ -60,4 +60,15 @@ export default class eventService implements IEventService{
         const changeStatus = await this._eventRepo.statusChangeOfEvent(eventId,status);
         return changeStatus;
     }
+
+    async deleteEvent(eventId: BigInt): Promise<any> {
+        const getEvent = await this._eventRepo.getEventById(eventId);
+
+        if(!getEvent){
+            throw new AllError("Event not found","Not Found");
+        }
+
+        const deletEventById = await this._eventRepo.deleteEvent(eventId);
+        return deletEventById;
+    }
 }

@@ -170,4 +170,18 @@ export default class eventRepository implements IEventRepository {
       );
     }
   }
+
+  async deleteEvent(eventId: BigInt): Promise<any> {
+    try {
+      const deleteEventById = await eventSchema.deleteOne({
+        _id : eventId
+      });
+      return deleteEventById;
+    } catch (err) {
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
 }

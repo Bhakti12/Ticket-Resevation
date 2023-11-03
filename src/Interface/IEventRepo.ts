@@ -6,4 +6,5 @@ export interface IEventRepository{
     getEventById(eventId:BigInt):Promise<getEvent>;
     editEvent(data : NewEvent, eventId : BigInt):Promise<getEvent>;
     statusChangeOfEvent(eventId : BigInt ,status : string):Promise<getEvent>;
+    deleteEvent(eventId : BigInt): Promise<any>;
 }

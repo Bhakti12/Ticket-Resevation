@@ -101,7 +101,7 @@ export default class eventController extends globalSuccessHandler {
         availableSeats,
         eventStatus,
         userId,
-        eventId
+        eventId,
       } = req.body;
 
       const editEventData: NewEvent = {
@@ -120,9 +120,12 @@ export default class eventController extends globalSuccessHandler {
         userId: userId,
       };
 
-      const editEve = await this._eventService.editEvent(editEventData,eventId);
+      const editEve = await this._eventService.editEvent(
+        editEventData,
+        eventId
+      );
 
-      this.sendJsonResponse(res,'event edited!',{length : 1},editEve);
+      this.sendJsonResponse(res, "event edited!", { length: 1 }, editEve);
     } catch (err) {
       this.sendErrorResponse(req, res, err);
     }
@@ -136,6 +139,21 @@ export default class eventController extends globalSuccessHandler {
         status
       );
       this.sendJsonResponse(res, "status changed", { length: 1 }, changeStatus);
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
+    }
+  }
+
+  async deleteEvent(req: express.Request, res: express.Response) {
+    try {
+      const eventId = req.body;
+      const deleteEventById = await this._eventService.deleteEvent(eventId);
+      this.sendJsonResponse(
+        res,
+        "event deleted!",
+        { length: 1 },
+        deleteEventById
+      );
     } catch (err) {
       this.sendErrorResponse(req, res, err);
     }
