@@ -146,7 +146,7 @@ export default class eventController extends globalSuccessHandler {
 
   async deleteEvent(req: express.Request, res: express.Response) {
     try {
-      const eventId = req.body;
+      const {eventId} = req.body;
       const deleteEventById = await this._eventService.deleteEvent(eventId);
       this.sendJsonResponse(
         res,

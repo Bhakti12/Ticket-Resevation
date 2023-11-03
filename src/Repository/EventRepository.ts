@@ -3,9 +3,11 @@ import { AllError } from "../Error/ErrorCases";
 import { IEventRepository } from "../Interface/IEventRepo";
 import { NewEvent, getEvent } from "../Type/Event";
 const eventSchema = require("../Model/eventSchema");
+import { ObjectId } from "mongodb";
 
 @injectable()
 export default class eventRepository implements IEventRepository {
+  
   async addEvent(data: NewEvent): Promise<getEvent> {
     try {
       const eventName = data.eventName;
@@ -59,7 +61,7 @@ export default class eventRepository implements IEventRepository {
 
   async getEventById(eventId: BigInt): Promise<getEvent> {
     try {
-      const getEventbyUserId = await eventSchema.findOne({
+      const getEventbyUserId = await eventSchema.findById({
         _id: eventId,
       });
       const eventName = getEventbyUserId.eventName;
@@ -92,6 +94,7 @@ export default class eventRepository implements IEventRepository {
         userId,
       };
     } catch (err) {
+      console.log("inside get event by id error",err);
       throw new AllError(
         "An error occured while interacting with the database",
         "Internal Server Error"
@@ -139,7 +142,7 @@ export default class eventRepository implements IEventRepository {
     status: string
   ): Promise<getEvent> {
     try {
-      const changeStatus = await eventSchema.updateOne(
+      const changeStatus = await eventSchema.findByIdAndUpdate(
         {
           _id: eventId,
         },
@@ -173,15 +176,30 @@ export default class eventRepository implements IEventRepository {
 
   async deleteEvent(eventId: BigInt): Promise<any> {
     try {
-      const deleteEventById = await eventSchema.deleteOne({
+      console.log("inside this");
+      const deleteEventById = await eventSchema.findByIdAndDelete({
         _id : eventId
       });
+      console.log(deleteEventById);
       return deleteEventById;
     } catch (err) {
+      console.log(err);
       throw new AllError(
         "An error occured while interacting with the database",
         "Internal Server Error"
       );
     }
   }
+
+  async searchEvent(): Promise<any> {
+    try{
+      throw new Error("Method not implemented.");
+    }catch(err){
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+  
 }

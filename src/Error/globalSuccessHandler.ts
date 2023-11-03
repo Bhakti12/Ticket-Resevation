@@ -21,6 +21,8 @@ export default class globalSuccessHandler{
             return res.status(err.getCode()).json(err.toJSON());
         }
 
+        console.log("err",err);
+
         return res.status(500).json({
             code: 500,
             status: 'Internal Server Error',

@@ -71,4 +71,8 @@ export default class eventService implements IEventService{
         const deletEventById = await this._eventRepo.deleteEvent(eventId);
         return deletEventById;
     }
+
+    async searchEvent(): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
 }
