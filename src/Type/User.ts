@@ -52,3 +52,11 @@ export declare type userToken = {
     email : string,
     role : string
 }
+
+export declare type ForgotPassword = {
+    id : BigInt,
+    userId : BigInt,
+    emailId : string,
+    nonce : string,
+    createdAt : Date
+}

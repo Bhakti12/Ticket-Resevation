@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { IAuthenticationRepository } from "../Interface/IAuthenticationRepo";
 import {
+  ForgotPassword,
   NewAccountUser,
   RefreshToken,
   getAccountUser,
@@ -12,7 +13,7 @@ const roleSchema = require("../Model/roleSchema");
 const refreshTokenSchema = require("../Model/refreshTokenSchema");
 
 @injectable()
-export class AuthenticationRepository implements IAuthenticationRepository {
+export class AuthenticationRepository implements IAuthenticationRepository {  
   async registerUser(
     firstName: string,
     lastName: string,
@@ -197,6 +198,39 @@ export class AuthenticationRepository implements IAuthenticationRepository {
         }
       );
     } catch (err) {
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+  
+  async forgotPassword(userId: BigInt, emailId: string, nonce: string): Promise<void> {
+    try{
+      throw new Error("Method not implemented.");
+    }catch(err){
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+  
+  async getForgotPassword(userId: BigInt): Promise<ForgotPassword | null> {
+    try{
+      throw new Error("Method not implemented.");
+    }catch(err){
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+
+  async updatePassword(userId: BigInt, password: string): Promise<void> {
+    try{
+      throw new Error("Method not implemented.");
+    }catch(err){
       throw new AllError(
         "An error occured while interacting with the database",
         "Internal Server Error"

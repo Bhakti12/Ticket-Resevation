@@ -120,4 +120,21 @@ export default class AuthenticationController extends globalSuccessHandler {
       this.sendErrorResponse(req,res,err);
     }
   }
+
+  async forgotPassword(req:express.Request,res:express.Response){
+    try{
+      const { emailId } = req.body;
+      
+    }catch(err){
+      this.sendErrorResponse(req,res,err);
+    }
+  }
+
+  async resetPassword(req:express.Request,res:express.Response){
+    try{
+      
+    }catch(err){
+      this.sendErrorResponse(req,res,err);
+    }
+  }
 }
