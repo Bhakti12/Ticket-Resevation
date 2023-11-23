@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { IAuthenticationRepository } from "../Interface/IAuthenticationRepo";
 import {
+  ForgotPassword,
   NewAccountUser,
   RefreshToken,
   getAccountUser,
@@ -10,9 +11,10 @@ import { AllError } from "../Error/ErrorCases";
 const userSchema = require("../Model/userSchema");
 const roleSchema = require("../Model/roleSchema");
 const refreshTokenSchema = require("../Model/refreshTokenSchema");
+const forgetPasswordSchema = require("../Model/forgetPassword");
 
 @injectable()
-export class AuthenticationRepository implements IAuthenticationRepository {
+export class AuthenticationRepository implements IAuthenticationRepository {  
   async registerUser(
     firstName: string,
     lastName: string,
@@ -197,6 +199,47 @@ export class AuthenticationRepository implements IAuthenticationRepository {
         }
       );
     } catch (err) {
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+  
+  async forgotPassword(userId: BigInt, emailId: string, nonce: string): Promise<void> {
+    try{
+      const createPassword = await forgetPasswordSchema.create({
+        userId : userId,
+        emailId : emailId,
+        nonce : nonce
+      });
+    }catch(err){
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+  
+  async getForgotPassword(userId: BigInt): Promise<ForgotPassword | null> {
+    try{
+      const getPassword = await forgetPasswordSchema.findOne({
+        userId : userId
+      });
+      return {id : getPassword.Id,userId : userId,emailId:getPassword.emailId,nonce:getPassword.nonce,createdAt:getPassword.createdAt}; 
+      //throw new Error("error");
+    }catch(err){
+      throw new AllError(
+        "An error occured while interacting with the database",
+        "Internal Server Error"
+      );
+    }
+  }
+
+  async updatePassword(userId: BigInt, password: string): Promise<void> {
+    try{
+      throw new Error("Method not implemented.");
+    }catch(err){
       throw new AllError(
         "An error occured while interacting with the database",
         "Internal Server Error"

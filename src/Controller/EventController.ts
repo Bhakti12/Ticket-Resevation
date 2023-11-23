@@ -87,6 +87,45 @@ export default class eventController extends globalSuccessHandler {
 
   async editEvent(req: express.Request, res: express.Response) {
     try {
+      const {
+        eventName,
+        eventDescription,
+        location,
+        mapLink,
+        startDate,
+        endDate,
+        registrationStartDate,
+        registrationEndDate,
+        price,
+        posterImages,
+        availableSeats,
+        eventStatus,
+        userId,
+        eventId,
+      } = req.body;
+
+      const editEventData: NewEvent = {
+        eventName: eventName,
+        eventDescription: eventDescription,
+        location: location,
+        mapLink: mapLink,
+        startDate: startDate,
+        endDate: endDate,
+        registrationStartDate: registrationStartDate,
+        registrationEndDate: registrationEndDate,
+        price: price,
+        posterImages: posterImages,
+        availableSeats: availableSeats,
+        eventStatus: eventStatus,
+        userId: userId,
+      };
+
+      const editEve = await this._eventService.editEvent(
+        editEventData,
+        eventId
+      );
+
+      this.sendJsonResponse(res, "event edited!", { length: 1 }, editEve);
     } catch (err) {
       this.sendErrorResponse(req, res, err);
     }
@@ -100,6 +139,21 @@ export default class eventController extends globalSuccessHandler {
         status
       );
       this.sendJsonResponse(res, "status changed", { length: 1 }, changeStatus);
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
+    }
+  }
+
+  async deleteEvent(req: express.Request, res: express.Response) {
+    try {
+      const {eventId} = req.body;
+      const deleteEventById = await this._eventService.deleteEvent(eventId);
+      this.sendJsonResponse(
+        res,
+        "event deleted!",
+        { length: 1 },
+        deleteEventById
+      );
     } catch (err) {
       this.sendErrorResponse(req, res, err);
     }
