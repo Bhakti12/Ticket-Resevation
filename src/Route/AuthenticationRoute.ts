@@ -59,4 +59,9 @@ router.post(
   (req,res) => authController.doLogOut(req,res)
 );
 
+router.post(
+  "/forget-password",
+  (req,res) => authController.forgotPassword(req,res)
+);
+
 export default router;

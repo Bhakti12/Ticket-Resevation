@@ -238,7 +238,11 @@ export class AuthenticationRepository implements IAuthenticationRepository {
 
   async updatePassword(userId: BigInt, password: string): Promise<void> {
     try{
-      throw new Error("Method not implemented.");
+      const updatePwd = await userSchema.updateOne({
+        _id : userId
+      },{
+        password : password
+      });
     }catch(err){
       throw new AllError(
         "An error occured while interacting with the database",
