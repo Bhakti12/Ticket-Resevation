@@ -63,10 +63,10 @@ export class AuthenticationService implements IAuthenticationService {
 
   async loginAccount(email: string, password: string): Promise<any> {
     const user = await this._authRepo.getUserbyEmailId(email);
-    console.log("user",user);
+    console.log("user", user);
 
-    if(user.status === "Inactive"){
-      throw new AllError('User is Inactive','Bad Request');
+    if (user.status === "Inactive") {
+      throw new AllError("User is Inactive", "Bad Request");
     }
 
     const key = config.KEY;
@@ -101,8 +101,8 @@ export class AuthenticationService implements IAuthenticationService {
         config.ACCESS_TOKEN_KEY,
         config.ACCESS_TOKEN_EXPIRES_IN
       );
-      
-        console.log("accessTOken",accessToken);
+
+      console.log("accessTOken", accessToken);
 
       const refreshToken = await this._jwtService.generateToken(
         data,
@@ -110,9 +110,9 @@ export class AuthenticationService implements IAuthenticationService {
         config.REFRESH_TOKEN_EXPIRES_IN
       );
 
-        console.log("refresh token",refreshToken);
+      console.log("refresh token", refreshToken);
 
-        console.log("userId",user.userId);
+      console.log("userId", user.userId);
       await this._authRepo.createRefreshToken(user.userId, refreshToken);
       //console.log(token);
 
@@ -120,12 +120,12 @@ export class AuthenticationService implements IAuthenticationService {
       await this._authRepo.setUserLastLogin(user.userId);
       //console.log("set time and date",set);
 
-        const loginDetails:login = {
-          userId : user.userId,
-          accessToken : accessToken,
-          refreshToken : refreshToken,
-          emailId : user.emailId
-        };
+      const loginDetails: login = {
+        userId: user.userId,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        emailId: user.emailId,
+      };
 
       return loginDetails;
     }
@@ -166,8 +166,6 @@ export class AuthenticationService implements IAuthenticationService {
     return newAccessToken;
   }
 
-  
-
   async doLogOut(userId: BigInt, refreshToken: string): Promise<boolean> {
     const user = await this._authRepo.getUserById(userId);
 
@@ -182,4 +180,25 @@ export class AuthenticationService implements IAuthenticationService {
     return true;
   }
 
+  async forgotPassword(emailId: string, isInvite: boolean): Promise<boolean> {
+    const user = await this._authRepo.getUserbyEmailId(emailId);
+
+    if (!user) {
+      throw new AllError("No user exist with this emailId", "Bad Request");
+    }
+
+    const nonce = crypto.randomBytes(64).toString("hex");
+
+    const hashNode = crypto
+      .pbkdf2Sync(nonce, config.IV, 1000, 64, "sha512")
+      .toString("hex");
+
+    if (isInvite) {
+      console.log("emailId is sent");
+    } else {
+      this._authRepo.forgotPassword(user.userId, emailId, hashNode);
+    }
+
+    return true;
+  }
 }

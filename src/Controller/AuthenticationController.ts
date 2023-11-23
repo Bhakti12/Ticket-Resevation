@@ -4,7 +4,7 @@ import multer from "multer";
 import globalSuccessHandler from "../Error/globalSuccessHandler";
 import { IAuthenticationService } from "../Interface/IAuthenticationService";
 import path from "path";
-import {config} from "../Config/env";
+import { config } from "../Config/env";
 
 export default class AuthenticationController extends globalSuccessHandler {
   private _authService: IAuthenticationService;
@@ -25,7 +25,7 @@ export default class AuthenticationController extends globalSuccessHandler {
         mobileNo,
         emailId,
         password,
-        status
+        status,
       } = req.body;
 
       const newUser: NewAccountUser = {
@@ -36,7 +36,7 @@ export default class AuthenticationController extends globalSuccessHandler {
         mobileNo,
         emailId,
         password,
-        status
+        status,
       };
 
       let file;
@@ -80,13 +80,16 @@ export default class AuthenticationController extends globalSuccessHandler {
     try {
       const { emailId, password } = req.body;
       console.log("req.body", req.body);
-      const verifyLogin = await this._authService.loginAccount(emailId, password);
+      const verifyLogin = await this._authService.loginAccount(
+        emailId,
+        password
+      );
       const data = {
-        userId : verifyLogin.userId,
-        accessToken : verifyLogin.accessToken,
-        refreshToken : verifyLogin.refreshToken,
-        emailId : verifyLogin.emailId
-      }
+        userId: verifyLogin.userId,
+        accessToken: verifyLogin.accessToken,
+        refreshToken: verifyLogin.refreshToken,
+        emailId: verifyLogin.emailId,
+      };
       this.sendJsonResponse(
         res,
         "Login sucessfully!",
@@ -111,30 +114,35 @@ export default class AuthenticationController extends globalSuccessHandler {
     }
   }
 
-  async doLogOut(req:express.Request,res:express.Response){
-    try{
+  async doLogOut(req: express.Request, res: express.Response) {
+    try {
       const { userId, refreshToken } = req.body;
-      const logout = await this._authService.doLogOut(userId,refreshToken);
+      const logout = await this._authService.doLogOut(userId, refreshToken);
       this.sendJsonResponse(res, null, { size: 1 }, logout);
-    }catch(err){
-      this.sendErrorResponse(req,res,err);
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
     }
   }
 
-  async forgotPassword(req:express.Request,res:express.Response){
-    try{
+  async forgotPassword(req: express.Request, res: express.Response) {
+    try {
       const { emailId } = req.body;
-      
-    }catch(err){
-      this.sendErrorResponse(req,res,err);
+      const result = await this._authService.forgotPassword(emailId, true);
+      this.sendJsonResponse(
+        res,
+        result ? "email sent successfully" : "no user found from this email Id",
+        null,
+        null
+      );
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
     }
   }
 
-  async resetPassword(req:express.Request,res:express.Response){
-    try{
-      
-    }catch(err){
-      this.sendErrorResponse(req,res,err);
+  async resetPassword(req: express.Request, res: express.Response) {
+    try {
+    } catch (err) {
+      this.sendErrorResponse(req, res, err);
     }
   }
 }
