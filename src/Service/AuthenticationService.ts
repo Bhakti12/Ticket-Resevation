@@ -201,4 +201,54 @@ export class AuthenticationService implements IAuthenticationService {
 
     return true;
   }
+
+  async resetPassword(
+    userId: BigInt,
+    password: string,
+    nonce: string,
+    isChange: boolean
+  ): Promise<boolean> {
+    const user = await this._authRepo.getUserById(userId);
+
+    if (!user) {
+      throw new AllError("No user exist with this Id", "Bad Request");
+    }
+
+    const hashNode = crypto
+      .pbkdf2Sync(nonce, config.IV, 1000, 64, "sha512")
+      .toString("hex");
+
+    if (isChange) {
+      const sendInvite = { nonce }; //TODO : Will add one method to send inviteby userId
+      if (!sendInvite) {
+        throw new AllError(
+          "can not send request to change password for the given user",
+          "Bad Request"
+        );
+      }
+      if (hashNode !== sendInvite.nonce) {
+        throw new AllError("Invalid request to change password", "Bad Request");
+      }
+    } else {
+      const forgotPassword = await this._authRepo.getForgotPassword(userId);
+
+      if (!forgotPassword) {
+        throw new AllError(
+          "cannot find request to reset password for the given user",
+          "Bad Request"
+        );
+      }
+
+      if (hashNode !== forgotPassword.nonce) {
+        throw new AllError("Invalid request to reset password", "Bad Request");
+      }
+    }
+
+    const hashPassword = crypto
+      .pbkdf2Sync(password, config.IV, 1000, 64, "sha512")
+      .toString("hex");
+    await this._authRepo.updatePassword(userId, hashPassword);
+
+    return true;
+  }
 }

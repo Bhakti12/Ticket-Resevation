@@ -141,6 +141,13 @@ export default class AuthenticationController extends globalSuccessHandler {
 
   async resetPassword(req: express.Request, res: express.Response) {
     try {
+      const userId = BigInt(req.query.userId);
+      const nonce =
+        req.query.nonce === undefined ? "" : req.query.nonce.toString();
+      const password = req.body;
+
+      await this._authService.resetPassword(userId, password, nonce, false);
+      this.sendJsonResponse(res, "password change sucessfully", null, null);
     } catch (err) {
       this.sendErrorResponse(req, res, err);
     }
